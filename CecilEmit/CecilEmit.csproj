@@ -1,0 +1,294 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="IL\Generated\Add - Copy.cs" />
+    <Compile Remove="IL\Generated\TextTemplate1 - Copy - Copy.cs" />
+    <Compile Remove="IL\Generated\TextTemplate1 - Copy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FastDelegates\FastDelegates.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="IL\Generated\Ldfld.tt">
+      <LastGenOutput>Ldsfld.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Ldsfld.tt">
+      <LastGenOutput>Ldsfld.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Ldloc.tt">
+      <LastGenOutput>Ldloc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Stfld.tt">
+      <LastGenOutput>Stfld.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Stsfld.tt">
+      <LastGenOutput>Stfld.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Stloc.tt">
+      <LastGenOutput>Stloc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Starg.tt">
+      <LastGenOutput>Ldloc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Ldarg.tt">
+      <LastGenOutput>Ret.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Box.tt">
+      <LastGenOutput>Box.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Ret.tt">
+      <LastGenOutput>Ret.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Pop.tt">
+      <LastGenOutput>Pop.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Dup.tt">
+      <LastGenOutput>Dup.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Neg.tt">
+      <LastGenOutput>Dup.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Nop.tt">
+      <LastGenOutput>Nop.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Rem.tt">
+      <LastGenOutput>Rem.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Shr.tt">
+      <LastGenOutput>Rem.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Shl.tt">
+      <LastGenOutput>Shl.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Xor.tt">
+      <LastGenOutput>Xor.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Sub.tt">
+      <LastGenOutput>Sub.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Or.tt">
+      <LastGenOutput>Or.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Not.tt">
+      <LastGenOutput>Not.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Ckfinite.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Ckfinite.cs</LastGenOutput>
+    </None>
+    <None Update="IL\Generated\Ldc.tt">
+      <LastGenOutput>Ldc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Mul.tt">
+      <LastGenOutput>Mul.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Div.tt">
+      <LastGenOutput>Div.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Conv.tt">
+      <LastGenOutput>Conv.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\And.tt">
+      <LastGenOutput>And.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Primatives\ILAction.tt">
+      <LastGenOutput>ILAction.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Primatives\ILFunc.tt">
+      <LastGenOutput>ILFunc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Add.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Add.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="IL\Generated\Add.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Add.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\And.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>And.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Ckfinite.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ckfinite.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Conv.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Conv.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Dup.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dup.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Ldarg - Copy - Copy.cs">
+      <DependentUpon>Ldarg - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Ldarg - Copy.cs">
+      <DependentUpon>Ldarg.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Ret.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ret.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Ldc.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ldc.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Ldsfld.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ldsfld.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Ldloc.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ldloc.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Mul.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mul.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Neg - Copy.cs">
+      <DependentUpon>Neg.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Pop.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Pop.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Stloc - Copy.cs">
+      <DependentUpon>Stloc.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Stloc.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Stloc.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Stsfld - Copy.cs">
+      <DependentUpon>Stsfld.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Stfld.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Stfld.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Nop.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Nop.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Not.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Not.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Div.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Div.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Or.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Or.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Box.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Box.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Primatives\ILAction.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ILAction.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Primatives\ILFunc.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ILFunc.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Rem.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Rem.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Shl.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Shl.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Sub.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Sub.tt</DependentUpon>
+    </Compile>
+    <Compile Update="IL\Generated\Xor.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Xor.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

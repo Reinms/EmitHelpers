@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<OutputPath>C:\Users\reinm\source\repos\CecilEmit\CecilEmit\__HELPERS\StandardHelpers\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AssemblyVersion>1.0.0.4</AssemblyVersion>
+	<FileVersion>1.0.0.4</FileVersion>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,69 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+namespace FastDelegates
+{
+	using System;
+	using System.Reflection;
+	internal static class ThrowHelpers
+	{
+		internal static void ThrowIfBadDelegate( Delegate del )
+		{
+			if( del.Target != null ) throw new InvalidOperationException( "Supplied delegate captured context. Try using a static function" );
+		}
+	}
+
+	#pragma warning disable IDE0021 // Use block body for constructors
+<#
+	const Int32 maxArgs = 64;
+	String currentArgs = "";
+	String methodArgs = "";
+	String callArgs = "";
+	for( Int32 i = 0; i <= maxArgs; ++i )
+	{
+		if( currentArgs != "" )
+		{
+			Write( $"\tpublic readonly struct FastFunc<{currentArgs}, TReturn>\r\n");
+			Write( "\t{\r\n");
+			Write( $"\t\tpublic delegate TReturn Signature( {methodArgs} );\r\n");
+			Write( "\t\tpublic readonly IntPtr functionPointer;\r\n");
+			Write( "\t\t[PatchCallToCalli]\r\n");
+			Write( $"\t\tpublic TReturn Call({methodArgs}) => Stub({callArgs}, this.functionPointer);\r\n");
+			Write( $"\t\tpublic static implicit operator Signature( FastFunc<{currentArgs}, TReturn> func ) => func.Call;\r\n");
+			Write( $"\t\tpublic static implicit operator FastFunc<{currentArgs}, TReturn>( Signature func ) => new FastFunc<{currentArgs}, TReturn>( func );\r\n");
+			Write( "\t\tpublic FastFunc(IntPtr ptr) => this.functionPointer = ptr;\r\n");
+			Write( "\t\tpublic FastFunc(RuntimeMethodHandle handle) : this( handle.GetFunctionPointer() ) {}\r\n" );
+			Write( "\t\tpublic FastFunc(MethodBase methodBase) : this( methodBase.MethodHandle ) {}\r\n" );
+			Write( "\t\tpublic FastFunc(Signature signature) : this( signature.Method ) => ThrowHelpers.ThrowIfBadDelegate( signature );\r\n"); 
+			Write( $"\t\tprivate static TReturn Stub({methodArgs}, IntPtr ptr) => default;\r\n");
+			Write( "\t}\r\n");
+			currentArgs = $"{currentArgs}, TArg{i+1}";
+			methodArgs = $"{methodArgs}, TArg{i+1} arg{i+1}";
+			callArgs = $"{callArgs}, arg{i+1}";
+		} else
+		{
+			Write( $"\tpublic readonly struct FastFunc<{currentArgs}TReturn>\r\n");
+			Write( "\t{\r\n");
+			Write( $"\t\tpublic delegate TReturn Signature({methodArgs});\r\n");
+			Write( "\t\tpublic readonly IntPtr functionPointer;\r\n");
+			Write( "\t\t[PatchCallToCalli]\r\n");
+			Write( $"\t\tpublic TReturn Call({methodArgs}) => Stub({callArgs}this.functionPointer);\r\n");
+			Write( $"\t\tpublic static implicit operator Signature( FastFunc<{currentArgs}TReturn> func ) => func.Call;\r\n");
+			Write( $"\t\tpublic static implicit operator FastFunc<{currentArgs}TReturn>( Signature func ) => new FastFunc<{currentArgs}TReturn>( func );\r\n");
+			Write( "\t\tpublic FastFunc(IntPtr ptr) => this.functionPointer = ptr;\r\n");
+			Write( "\t\tpublic FastFunc(RuntimeMethodHandle handle) : this( handle.GetFunctionPointer() ) {}\r\n" );
+			Write( "\t\tpublic FastFunc(MethodBase methodBase) : this( methodBase.MethodHandle ) {}\r\n" );
+			Write( "\t\tpublic FastFunc(Signature signature) : this( signature.Method ) => ThrowHelpers.ThrowIfBadDelegate( signature );\r\n"); 
+			Write( $"\t\tprivate static TReturn Stub({methodArgs}IntPtr ptr) => default;\r\n");
+			Write( "\t}\r\n");
+			currentArgs = "TArg1";
+			methodArgs = "TArg1 arg1";
+			callArgs = "arg1";
+		}
+	}
+	#>
+	#pragma warning restore IDE0021 // Use block body for constructors
+}

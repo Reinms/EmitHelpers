@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+var shortName = "Neg";
+var longName = "Negate";
+var seed = new[]
+{
+	("Int32", "Int32"),
+};
+
+void WriteFunc( String name, (String, String) v )
+{
+	var (t1, t2) = v;
+	Write( $"\t\tpublic static IL<{t2}, TStack> {name}<TStack>( this IL<{t1}, TStack> stack )\r\n");
+	Write( "\t\t\twhere TStack : IEmittable\r\n" );
+	Write( "\t\t{\r\n" );
+	Write( "\t\t\treturn default;\r\n");
+	Write( "\t\t}\r\n" );
+}
+#>
+namespace CecilEmit.IL.ShortNames
+{
+	using System;
+	public static partial class ILShortExtensions
+	{
+<#
+foreach( var v in seed )
+{
+	WriteFunc( shortName, v );
+}
+#>
+	}
+}
+namespace CecilEmit.IL.LongNames
+{
+	using System;
+	public static partial class ILLongExtensions
+	{
+<#
+foreach( var v in seed )
+{
+	WriteFunc( longName, v );
+}
+#>
+	}
+}

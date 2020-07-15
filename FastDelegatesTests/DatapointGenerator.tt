@@ -1,0 +1,222 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)\__HELPERS\FrameworkHelpers\FrameworkHelpers.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="FrameworkHelpers" #>
+<#@ output extension=".cs" #>
+namespace FastDelegatesTests
+{
+	using System;
+	using FastDelegates;
+	using NUnit.Framework;
+
+<#
+Type[] typesToScan = {typeof(System.Math),typeof(BitConverter)};// typeof(BitConverter), typeof(Convert), 
+var flags = BindingFlags.Public | BindingFlags.Static;
+var typenameSet = new HashSet<(String,String,List<Type>)>();
+var typeInfos = new Dictionary<String,(List<Type> types, String genericArgs)>();
+
+
+
+foreach( var type in typesToScan )
+{
+	foreach( var method in type.GetMethods(flags) )
+	{
+		var genArgs = "";
+		var argsName = "";
+		var typeList = new List<Type>();
+		foreach( var parameter in method.GetParameters() )
+		{
+			if( parameter.IsIn )
+			{
+				Write( $"\t//{type.FullName}.{method.Name} in param\r\n");
+				goto FastExit;
+			}
+			if( parameter.IsOut )
+			{
+				Write( $"\t//{type.FullName}.{method.Name} out param\r\n");
+				goto FastExit;
+			}
+			
+			var parType = parameter.ParameterType;
+			if( parType.IsArray )
+			{
+				Write( $"\t//{type.FullName}.{method.Name} Array type\r\n");
+				goto FastExit;
+			}
+			var name = parType.FullName;
+			argsName = $"{argsName}__{name.Replace(".", "_")}";
+			if( genArgs == "" )
+			{
+				genArgs = $"<{name}";
+			} else
+			{
+				genArgs = $"{genArgs}, {name}";
+			}
+
+			typeList.Add( parType );
+		}
+		if( method.ReturnParameter?.ParameterType == null )
+		{
+			Write( $"\t//{type.FullName}.{method.Name}\r\n");
+			goto FastExit;
+		}
+		var retType = method.ReturnParameter.ParameterType;
+		if( retType.IsArray )
+		{
+				Write( $"\t//{type.FullName}.{method.Name} Array type\r\n");
+				goto FastExit;
+		}
+		var retName = retType.FullName;
+		argsName = $"{argsName}___{retName.Replace(".", "_")}";
+		if( genArgs == "" )
+		{
+			genArgs = $"<{retName}>";
+		} else
+		{
+			genArgs = $"{genArgs}, {retName}>";
+		}
+		typeList.Add( retType );
+		var namespaceString = type.Namespace.Replace( ".", "_" );
+		var uniqueID = $"{namespaceString}_{type.Name}_{method.Name}{argsName}";
+		var className = $"GeneratedTest{argsName}";
+		Write( $"\tpublic partial class {className} : FuncFixture{genArgs}\r\n");
+		typeInfos[argsName] = (typeList,genArgs);
+		Write( "\t{\r\n");
+		Write( "\t\t[Datapoint]\r\n");
+		Write( $"\t\tpublic FastFunc{genArgs}.Signature {uniqueID} = {type.FullName}.{method.Name};\r\n");
+		Write( "\t}\r\n");
+		FastExit:
+		continue;
+	}
+}
+String WriteDatapointSource( String current, Type t, Int32 tabs )
+{
+	var res = current;
+	void WriteRes( String str )
+	{
+		res = $"{res}{str}";
+	}
+	for( Int32 i = 0; i < tabs; ++i ) WriteRes( "\t" );
+	WriteRes( "[DatapointSource]\r\n");
+	for( Int32 i = 0; i < tabs; ++i ) WriteRes( "\t" );
+	WriteRes( $"public {t.FullName}[] datasource_{t.FullName.Replace(".","_")} ");
+	const Int32 numElements = 10;
+	switch( t )
+	{
+		default:
+			return "";
+		case Type ty when ty == typeof(Int32):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.Next(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(UInt32):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextUInt(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Int64):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextLong(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(UInt64):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextULong(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Int16):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextShort(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(UInt16):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextUShort(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(SByte):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextSByte(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Byte):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextByte(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Double):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextDouble(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Single):
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextFloat(), " );
+			WriteRes( "};\r\n");
+			break;
+
+		case Type ty when ty == typeof(Decimal):
+			//return "";
+			WriteRes( "{ get; } = { ");
+			for( Int32 i = 0; i < numElements; ++i ) WriteRes( "TestContext.CurrentContext.Random.NextDecimal(), " );
+			WriteRes( "};\r\n");
+			break;
+
+	}
+
+	return res;
+}
+
+
+
+Write( "\r\n\r\n");
+foreach( var (argsName,(types,genArgs)) in typeInfos )
+{
+	var datapoints = "";
+	var counter = 0;
+	var arguments = String.Join( ", ", types.Select( (t) =>
+	{
+		if( counter == types.Count ) return "";		
+		return $"{t.FullName} arg{++counter}";
+	}));
+	if( arguments != "" ) arguments = $", {arguments}";
+	var temp = new List<Int32>(counter);
+	for( Int32 i = 1; i < counter; ++i ) temp.Add( i );
+	var callArgs = String.Join( ", ", temp.Select( (i) => $"arg{i}" ) );
+	if( callArgs != "" ) callArgs = $", {callArgs}";
+
+	foreach( var t in types.Distinct().Where((t) => !t.IsEnum) )
+	{
+		datapoints = WriteDatapointSource( datapoints, t, 2 );
+		if( datapoints == "" )
+		{
+			Write( $"\t//Unsupported type: {t.FullName}\r\n" );
+			goto Exit;
+		}
+	}
+	Write( $"\tpublic partial class GeneratedTest{argsName} : FuncFixture{genArgs} \r\n");
+	Write( "\t{\r\n");
+	Write( datapoints );
+	Write( "\r\n" );
+	Write( "\t\t[Theory]\r\n");
+	Write( $"\t\tpublic void Test(FastFunc{genArgs}.Signature func{arguments}) => base.TestFunc( func{callArgs} );\r\n");
+	Write( "\t}\r\n");
+	Exit:
+	continue;
+}
+#>
+}
