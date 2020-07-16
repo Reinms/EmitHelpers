@@ -7,6 +7,7 @@
     using System.Runtime.InteropServices.ComTypes;
     using System.Text;
     using CecilEmit.IL;
+    using System.Runtime;
 
     public static partial class ILExtensions
     {
@@ -54,6 +55,7 @@
         // TOD: Jmp
         // TOD: Ldftn
         // TOD: Ldvirtftn
+        // TOD: Newobj
         // TOD: Tailcall
         #endregion
         #region On Hold
@@ -61,33 +63,17 @@
         // TOD: Cgt (comparison)
         // TOD: Clt (comparison)
 
-        // TOD: Newobj (type references)
-        // TOD: CastClass (type references)
-        // TOD: Isinst (type references)
-        // TOD: Ldnull (type references)
-        // TOD: Ldtoken (type references)
-        // TOD: Sizeof (type references)
-        // TOD: Unbox  (type references)
-        // TOD: Unbox_any (type references)
-
-        // TOD: Arglist (addresses)
-        // TOD: Localloc (Addresses)
-        // TOD: Cpblk (Addresses)
-        // TOD: Cpobj (Addresses)
-        // TOD: Initblk (Addresses)
-        // TOD: Initobj (Addresses)
-        // TOD: Ldfld (Addresses)
-        // TOD: Ldind (Addresses)
-        // TOD: Ldlen (Addresses)
-        // TOD: Ldobj (addresses)
-        // TOD: Ldsflda (addresses)
-        // TOD: Mkrefany (addresses)
-        // TOD: Stind (addresses)
-        // TOD: stobj (addresses)
-        // TOD: Refanytype (addresses)
-        // TOD: Refanyval (addresses)
-        // TOD: Unaligned (addresses)
-        // TOD: Volatile (addresses)
+        // TODO: Ldind (Addresses)
+        // TODO: Ldlen (Addresses)
+        // TODO: Ldobj (addresses)
+        // TODO: Ldsflda (addresses)
+        // TODO: Mkrefany (addresses)
+        // TODO: Stind (addresses)
+        // TODO: stobj (addresses)
+        // TODO: Refanytype (addresses)
+        // TODO: Refanyval (addresses)
+        // TODO: Unaligned (addresses)
+        // TODO: Volatile (addresses)
 
         // TOD: Ldelem (arrays)
         // TOD: Stelem (arrays)

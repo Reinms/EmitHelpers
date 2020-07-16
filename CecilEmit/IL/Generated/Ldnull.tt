@@ -6,17 +6,17 @@
 <#@ output extension=".cs" #>
 <#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#
-var shortName = "Neg";
-var longName = "Negate";
+var shortName = "Ldnull";
+var longName = "LoadNull";
 var seed = new[]
 {
-	("Int32", "Int32"),
+	"Int32",
+	"String",
 };
 
-void WriteFunc( String name, (String, String) v )
+void WriteFunc( String name )
 {
-	var (t1, t2) = v;
-	Write( $"\t\tpublic static IL<{t2}, TStack> {name}<TStack>( this IL<{t1}, TStack> stack )\r\n");
+	Write( $"\t\tpublic static IL<ILNull, TStack> {name}<TStack>( this TStack stack )\r\n");
 	Write( "\t\t\twhere TStack : IEmittable\r\n" );
 	Write( "\t\t{\r\n" );
 	Write( "\t\t\treturn default;\r\n");
@@ -29,10 +29,10 @@ namespace CecilEmit.IL.ShortNames
 	public static partial class ILShortExtensions
 	{
 <#
-foreach( var v in seed )
-{
-	WriteFunc( shortName, v );
-}
+//foreach( var v in seed )
+//{
+	WriteFunc( shortName );
+//}
 #>
 	}
 }
@@ -42,10 +42,10 @@ namespace CecilEmit.IL.LongNames
 	public static partial class ILLongExtensions
 	{
 <#
-foreach( var v in seed )
-{
-	WriteFunc( longName, v );
-}
+//foreach( var v in seed )
+//{
+	WriteFunc( longName );
+//}
 #>
 	}
 }

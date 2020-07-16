@@ -6,18 +6,21 @@
 <#@ output extension=".cs" #>
 <#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#
-var shortName = "Neg";
-var longName = "Negate";
-var seed = new[]
+var shortName = "Template";
+var longName = "Template";
+var seed = new (String ret, String genArgs, String mainArg, String[] args, String[] constraints )[]
 {
-	("Int32", "Int32"),
+	("TStack", "<TStack>", "TStack stack", new[] { "TStack stack", }, new[] { "TStack : IEmittable", } ),
 };
 
-void WriteFunc( String name, (String, String) v )
+void WriteFunc( String name, (String, String, String, String[], String[] ) data )
 {
-	var (t1, t2) = v;
-	Write( $"\t\tpublic static IL<{t2}, TStack> {name}<TStack>( this IL<{t1}, TStack> stack )\r\n");
-	Write( "\t\t\twhere TStack : IEmittable\r\n" );
+	var (ret, genArgs, mainArg, args, constraints ) = data;
+	Write( $"\t\tpublic static {ret} {name}{genArgs}( this {mainArg}{((args==null||args.Length==0) ? "" : $", {String.Join(", ",args)}")})\r\n");
+	foreach( var s in constraints )
+	{
+		Write( $"\t\t\twhere {s}\r\n" );
+	}
 	Write( "\t\t{\r\n" );
 	Write( "\t\t\treturn default;\r\n");
 	Write( "\t\t}\r\n" );

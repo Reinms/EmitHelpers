@@ -3,8 +3,9 @@
 	using System;
 	public static partial class ILShortExtensions
 	{
-		public static TStack Stloc<TLocal,TStack>( this IL<TLocal, TStack> stack, ILLocal<TLocal> loc )
+		public static IL<TBoxed,TStack> Unbox_Any<TBoxed,TStack>( this IL<ILBoxed<TBoxed>, TStack> stack )
 			where TStack : IEmittable
+			where TBoxed : struct
 		{
 			return default;
 		}
@@ -15,8 +16,9 @@ namespace CecilEmit.IL.LongNames
 	using System;
 	public static partial class ILLongExtensions
 	{
-		public static TStack StoreLocal<TLocal,TStack>( this IL<TLocal, TStack> stack, ILLocal<TLocal> loc )
+		public static IL<TBoxed,TStack> UnboxToValue<TBoxed,TStack>( this IL<ILBoxed<TBoxed>, TStack> stack )
 			where TStack : IEmittable
+			where TBoxed : struct
 		{
 			return default;
 		}
