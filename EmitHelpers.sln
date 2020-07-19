@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CecilEmit", "CecilEmit\Ceci
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", "{9D4FAAD3-2FB9-4279-9666-BEFC34956604}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmitHelper", "EmitHelper\EmitHelper.csproj", "{2A502E00-DBEC-4896-A223-B922F9A76E9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{D07E4CDC-0E8E-4810-B8A3-EC98A8129B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D07E4CDC-0E8E-4810-B8A3-EC98A8129B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D07E4CDC-0E8E-4810-B8A3-EC98A8129B9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A502E00-DBEC-4896-A223-B922F9A76E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A502E00-DBEC-4896-A223-B922F9A76E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A502E00-DBEC-4896-A223-B922F9A76E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A502E00-DBEC-4896-A223-B922F9A76E9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

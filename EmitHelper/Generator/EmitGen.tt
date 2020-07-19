@@ -1,0 +1,800 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Reflection.Emit" #>
+<#@ output extension=".cs" #>
+<#
+var flags = BindingFlags.Public | BindingFlags.Static;
+var allOpcodes = typeof(OpCodes).GetFields(flags).Select((field) => (OpCode)field.GetValue(null)).OrderBy( (oc) => oc.Name );
+var opcodeAliases = new Dictionary<String, (String shortName, String longName, Boolean skip, Boolean overloaded )>
+{
+	{ "add", ( "Add", "Add", false, false ) },							//----------
+	{ "add.ovf", ( "", "", true, false ) },								//X
+	{ "add.ovf.un", ( "", "", true, false ) },							//X
+	{ "and", ( "And", "And", false, false ) },							//----------
+	{ "arglist", ( "Arglist", "ArgList", false, false ) },				//	Pointers
+	{ "beq", ( "Beq", "BranchEqual", false, false ) },					//	Branch
+	{ "beq.s", ( "", "", true, false ) },								//X
+	{ "bge", ( "Bge", "BranchGreaterOrEqual", false, false ) },			//	Branch
+	{ "bge.s", ( "", "", true, false ) },								//X
+	{ "bge.un", ( "", "", true, false ) },								//X
+	{ "bge.un.s", ( "", "", true, false ) },							//X
+	{ "bgt", ( "Bgt", "BranchGreater", false, false ) },				//	Branch
+	{ "bgt.s", ( "", "", true, false ) },								//X
+	{ "bgt.un", ( "", "", true, false ) },								//X
+	{ "bgt.un.s", ( "", "", true, false ) },							//X
+	{ "ble", ( "Ble", "BranchLessOrEqual", false, false ) },			//	Branch
+	{ "ble.s", ( "", "", true, false ) },								//X
+	{ "ble.un", ( "", "", true, false ) },								//X
+	{ "ble.un.s", ( "", "", true, false ) },							//X
+	{ "blt", ( "Blt", "BranchLess", false, false ) },					//	Branch
+	{ "blt.s", ( "", "", true, false ) },								//X
+	{ "blt.un", ( "", "", true, false ) },								//X
+	{ "blt.un.s", ( "", "", true, false ) },							//X
+	{ "bne.un", ( "Bne", "BranchNotEqual", false, false ) },			//	Branch
+	{ "bne.un.s", ( "", "", true, false ) },							//X
+	{ "box", ( "Box", "Box", false, false ) },							//----------
+	{ "br", ( "Br", "Branch", false, false ) },							//	Branch
+	{ "br.s", ( "", "", true, false ) },								//X
+	{ "break", ( "Break", "Break", false, false ) },					//	Branch
+	{ "brfalse", ( "Brfalse", "BranchFalse", false, false ) },			//	Branch
+	{ "brfalse.s", ( "", "", true, false ) },							//X
+	{ "brtrue", ( "Brtrue", "BranchTrue", false, false ) },				//	Branch
+	{ "brtrue.s", ( "", "", true, false ) },							//X
+	{ "call", ( "Call", "Call", false, false ) },						//	Call
+	{ "calli", ( "Calli", "CallIndirect", false, false ) },				//	Call
+	{ "callvirt", ( "Callvirt", "CallVirtual", false, false ) },		//	Call
+	{ "castclass", ( "Castclass", "CastClass", false, false ) },		//----------
+	{ "ceq", ( "Ceq", "CmpEqual", false, false ) },						//	Compare
+	{ "cgt", ( "Cgt", "CmpGreater", false, false ) },					//	Compare
+	{ "cgt.un", ( "", "", true, false ) },								//X
+	{ "ckfinite", ( "Ckfinite", "CheckFinite", false, false ) },		//----------
+	{ "clt", ( "Clt", "CmpLess", false, false ) },						//	Compare
+	{ "clt.un", ( "", "", true, false ) },								//X
+	{ "constrained.", ( "Constrained", "Constrained", false, false ) },	//	Call Prefix
+	{ "conv.i", ( "", "", false, false ) },								//	Convert
+	{ "conv.i1", ( "", "", false, false ) },							//	Convert
+	{ "conv.i2", ( "", "", false, false ) },							//	Convert
+	{ "conv.i4", ( "", "", false, false ) },							//	Convert
+	{ "conv.i8", ( "", "", false, false ) },							//	Convert
+	{ "conv.ovf.i", ( "", "", false, false ) },							//	Convert
+	{ "conv.ovf.i.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i1", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i1.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i2", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i2.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i4", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i4.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i8", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.i8.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u", ( "", "", false, false ) },							//	Convert
+	{ "conv.ovf.u.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u1", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u1.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u2", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u2.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u4", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u4.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u8", ( "", "", false, false ) },						//	Convert
+	{ "conv.ovf.u8.un", ( "", "", false, false ) },						//	Convert
+	{ "conv.r.un", ( "", "", false, false ) },							//	Convert
+	{ "conv.r4", ( "", "", false, false ) },							//	Convert
+	{ "conv.r8", ( "", "", false, false ) },							//	Convert
+	{ "conv.u", ( "", "", false, false ) },								//	Convert
+	{ "conv.u1", ( "", "", false, false ) },							//	Convert
+	{ "conv.u2", ( "", "", false, false ) },							//	Convert
+	{ "conv.u4", ( "", "", false, false ) },							//	Convert
+	{ "conv.u8", ( "", "", false, false ) },							//	Convert
+	{ "cpblk", ( "", "", false, false ) },								//	Pointer
+	{ "cpobj", ( "", "", false, false ) },								//	Pointer
+	{ "div", ( "Div", "Divide", false, false ) },						//
+	{ "div.un", ( "", "", true, false ) },								//X
+	{ "dup", ( "", "", false, false ) },								//
+	{ "endfilter", ( "", "", false, false ) },							//	Branch
+	{ "endfinally", ( "", "", false, false ) },							//	Branch
+	{ "initblk", ( "", "", false, false ) },							//	Pointer
+	{ "initobj", ( "", "", false, false ) },							//	Pointer
+	{ "isinst", ( "", "", false, false ) },								//
+	{ "jmp", ( "", "", false, false ) },								//	Call
+	{ "ldarg", ( "", "", false, false ) },								//	
+	{ "ldarg.0", ( "", "", true, false ) },								//X
+	{ "ldarg.1", ( "", "", true, false ) },								//X
+	{ "ldarg.2", ( "", "", true, false ) },								//X
+	{ "ldarg.3", ( "", "", true, false ) },								//X
+	{ "ldarg.s", ( "", "", true, false ) },								//X
+	{ "ldarga", ( "", "", false, false ) },								//	Pointer
+	{ "ldarga.s", ( "", "", true, false ) },							//X
+	{ "ldc.i4", ( "", "", false, false ) },								//
+	{ "ldc.i4.0", ( "", "", true, false ) },							//X
+	{ "ldc.i4.1", ( "", "", true, false ) },							//X
+	{ "ldc.i4.2", ( "", "", true, false ) },							//X
+	{ "ldc.i4.3", ( "", "", true, false ) },							//X
+	{ "ldc.i4.4", ( "", "", true, false ) },							//X
+	{ "ldc.i4.5", ( "", "", true, false ) },							//X
+	{ "ldc.i4.6", ( "", "", true, false ) },							//X
+	{ "ldc.i4.7", ( "", "", true, false ) },							//X
+	{ "ldc.i4.8", ( "", "", true, false ) },							//X
+	{ "ldc.i4.m1", ( "", "", true, false ) },							//X
+	{ "ldc.i4.s", ( "", "", false, false ) },							//X
+	{ "ldc.i8", ( "", "", false, false ) },								//X
+	{ "ldc.r4", ( "", "", false, false ) },								//X
+	{ "ldc.r8", ( "", "", false, false ) },								//X
+	{ "ldelem", ( "", "", false, false ) },								//	Array
+	{ "ldelem.i", ( "", "", true, false ) },							//X
+	{ "ldelem.i1", ( "", "", true, false ) },							//X
+	{ "ldelem.i2", ( "", "", true, false ) },							//X
+	{ "ldelem.i4", ( "", "", true, false ) },							//X
+	{ "ldelem.i8", ( "", "", true, false ) },							//X
+	{ "ldelem.r4", ( "", "", true, false ) },							//X
+	{ "ldelem.r8", ( "", "", true, false ) },							//X
+	{ "ldelem.ref", ( "", "", true, false ) },							//X
+	{ "ldelem.u1", ( "", "", true, false ) },							//X
+	{ "ldelem.u2", ( "", "", true, false ) },							//X
+	{ "ldelem.u4", ( "", "", true, false ) },							//X
+	{ "ldelema", ( "", "", false, false ) },							//	Array	Pointer
+	{ "ldfld", ( "", "", false, false ) },								//
+	{ "ldflda", ( "", "", false, false ) },								//	Pointer
+	{ "ldftn", ( "", "", false, false ) },								//
+	{ "ldind.i", ( "", "", false, false ) },							//	Pointer
+	{ "ldind.i1", ( "", "", true, false ) },							//X
+	{ "ldind.i2", ( "", "", true, false ) },							//X
+	{ "ldind.i4", ( "", "", true, false ) },							//X
+	{ "ldind.i8", ( "", "", true, false ) },							//X
+	{ "ldind.r4", ( "", "", true, false ) },							//X
+	{ "ldind.r8", ( "", "", true, false ) },							//X
+	{ "ldind.ref", ( "", "", true, false ) },							//X
+	{ "ldind.u1", ( "", "", true, false ) },							//X
+	{ "ldind.u2", ( "", "", true, false ) },							//X
+	{ "ldind.u4", ( "", "", true, false ) },							//X
+	{ "ldlen", ( "", "", false, false ) },								//	Array
+	{ "ldloc", ( "", "", false, false ) },								//
+	{ "ldloc.0", ( "", "", true, false ) },								//X
+	{ "ldloc.1", ( "", "", true, false ) },								//X
+	{ "ldloc.2", ( "", "", true, false ) },								//X
+	{ "ldloc.3", ( "", "", true, false ) },								//X
+	{ "ldloc.s", ( "", "", true, false ) },								//X
+	{ "ldloca", ( "", "", false, false ) },								//	Pointer
+	{ "ldloca.s", ( "", "", true, false ) },							//X
+	{ "ldnull", ( "", "", false, false ) },								//
+	{ "ldobj", ( "", "", false, false ) },								//
+	{ "ldsfld", ( "", "", false, false ) },								//
+	{ "ldsflda", ( "", "", false, false ) },							//	Pointer
+	{ "ldstr", ( "", "", false, false ) },								//
+	{ "ldtoken", ( "", "", false, false ) },							//
+	{ "ldvirtftn", ( "", "", false, false ) },							//	Call Pointer
+	{ "leave", ( "", "", false, false ) },								//	Branch
+	{ "leave.s", ( "", "", true, false ) },								//X
+	{ "localloc", ( "", "", false, false ) },							//	Pointer
+	{ "mkrefany", ( "", "", false, false ) },							//	Pointer
+	{ "mul", ( "", "", false, false ) },								//
+	{ "mul.ovf", ( "", "", true, false ) },								//X
+	{ "mul.ovf.un", ( "", "", true, false ) },							//X
+	{ "neg", ( "", "", false, false ) },								//
+	{ "newarr", ( "", "", false, false ) },								//	Array
+	{ "newobj", ( "", "", false, false ) },								//	Call
+	{ "nop", ( "Nop", "NoOp", false, false ) },							//
+	{ "not", ( "", "", false, false ) },								//
+	{ "or", ( "", "", false, false ) },									//
+	{ "pop", ( "", "", false, false ) },								//
+	{ "prefix1", ( "", "", true, false ) },								//X
+	{ "prefix2", ( "", "", true, false ) },								//X
+	{ "prefix3", ( "", "", true, false ) },								//X
+	{ "prefix4", ( "", "", true, false ) },								//X
+	{ "prefix5", ( "", "", true, false ) },								//X
+	{ "prefix6", ( "", "", true, false ) },								//X
+	{ "prefix7", ( "", "", true, false ) },								//X
+	{ "prefixref", ( "", "", true, false ) },							//X
+	{ "readonly.", ( "", "", false, false ) },							//	Pointer
+	{ "refanytype", ( "", "", false, false ) },							//	Pointer
+	{ "refanyval", ( "", "", false, false ) },							//	Pointer
+	{ "rem", ( "", "", false, false ) },								//
+	{ "rem.un", ( "", "", false, false ) },								//X
+	{ "ret", ( "", "", false, false ) },								//	Return
+	{ "rethrow", ( "", "", false, false ) },							//	Branch
+	{ "shl", ( "", "", false, false ) },								//
+	{ "shr", ( "", "", false, false ) },								//
+	{ "shr.un", ( "", "", true, false ) },								//X
+	{ "sizeof", ( "", "", false, false ) },								//
+	{ "starg", ( "", "", false, false ) },								//
+	{ "starg.s", ( "", "", true, false ) },								//X
+	{ "stelem", ( "", "", false, false ) },								//	Array
+	{ "stelem.i", ( "", "", true, false ) },							//X
+	{ "stelem.i1", ( "", "", true, false ) },							//X
+	{ "stelem.i2", ( "", "", true, false ) },							//X
+	{ "stelem.i4", ( "", "", true, false ) },							//X
+	{ "stelem.i8", ( "", "", true, false ) },							//X
+	{ "stelem.r4", ( "", "", true, false ) },							//X
+	{ "stelem.r8", ( "", "", true, false ) },							//X
+	{ "stelem.ref", ( "", "", true, false ) },							//X
+	{ "stfld", ( "", "", false, false ) },								//
+	{ "stind.i", ( "", "", false, false ) },							//	Pointer
+	{ "stind.i1", ( "", "", true, false ) },							//X
+	{ "stind.i2", ( "", "", true, false ) },							//X
+	{ "stind.i4", ( "", "", true, false ) },							//X
+	{ "stind.i8", ( "", "", true, false ) },							//X
+	{ "stind.r4", ( "", "", true, false ) },							//X
+	{ "stind.r8", ( "", "", true, false ) },							//X
+	{ "stind.ref", ( "", "", true, false ) },							//X
+	{ "stloc", ( "", "", false, false ) },								//
+	{ "stloc.0", ( "", "", true, false ) },								//X
+	{ "stloc.1", ( "", "", true, false ) },								//X
+	{ "stloc.2", ( "", "", true, false ) },								//X
+	{ "stloc.3", ( "", "", true, false ) },								//X
+	{ "stloc.s", ( "", "", true, false ) },								//X
+	{ "stobj", ( "", "", false, false ) },								//	Pointer
+	{ "stsfld", ( "", "", false, false ) },								//
+	{ "sub", ( "", "", false, false ) },								//
+	{ "sub.ovf", ( "", "", true, false ) },								//X
+	{ "sub.ovf.un", ( "", "", true, false ) },							//X
+	{ "switch", ( "", "", false, false ) },								//	Branch
+	{ "tail.", ( "", "", false, false ) },								//	Call
+	{ "throw", ( "", "", false, false ) },								//	Branch
+	{ "unaligned.", ( "", "", false, false ) },							//	Pointer
+	{ "unbox", ( "", "", false, false ) },								//
+	{ "unbox.any", ( "", "", false, false ) },							//
+	{ "volatile.", ( "", "", false, false ) },							//	Pointer
+	{ "xor", ( "Xor", "XOr", false, false ) },							//----------
+};
+
+var generationData = new Dictionary<String, (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]>
+{
+	{ "add", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_add();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "and", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_and();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+
+
+
+
+
+
+	{ "box", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILBoxed<TBoxed>, TStack>", "TBoxed, TStack", "IL<TBoxed, TStack>", null , new[] { "TStack : ILStack", "TBoxed : struct", }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff",
+			"return new IL<ILBoxed<TBoxed>, TStack>( stack.Pop() );"
+		}),
+		( "IL<ILBoxed<TBoxedTo>, TStack>", "TBoxedTo, TTypeRef, TBoxedFrom, TStack", "IL<TBoxedFrom, TStack>", new[] { ("TTypeRef", "type") }, new[] { "TStack : ILStack", "TBoxedTo : struct", "TBoxedFrom : struct", "TTypeRef : ITypeRef<TBoxedTo>", }, new[] 
+		{
+			"stack.bottom.reciever.Emit_box(type);",
+			"return new IL<ILBoxed<TBoxedTo>, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+	{ "castclass", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TCastTo, TStack>", "TCastTo, TCastFrom, TTypeRef, TStack", "IL<TCastFrom, TStack>", new[] { ("TTypeRef", "type"), } , new[] { "TStack : ILStack", "TBoxed : struct", "TTypeRef : ITypeRef<TCastTo>", }, new[] 
+		{
+			"stack.bottom.reciever.Emit_castclass(type);",
+			"return new IL<TCastTo, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+	{ "ckfinite", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Single, TStack>", null , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ckfinite();",
+			"return new IL<Int32, TStack>( stack.Pop() );"
+		}),
+		( "IL<Int32, TStack>", "TStack", "IL<Double, TStack>", null , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ckfinite();",
+			"return new IL<Int32, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+	{ "div", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_div();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+
+
+	{ "xor", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_xor();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+};
+
+var sigOverrides = new Dictionary<String, (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints)>
+{
+
+};
+
+var implOverrides = new Dictionary<String,String[]>
+{
+
+};
+
+
+String[] GetArgsText( OpCode opcode )
+{
+	switch( opcode.OperandType )
+	{
+		default:
+			return new[] { $"Unknown_{opcode.OperandType}" };
+		case OperandType.InlineNone:
+			return new[] { "" };
+
+		case OperandType.ShortInlineVar:
+			return new[] { "Byte index" };
+
+		case OperandType.ShortInlineI:
+			return new[]
+			{ 
+				"SByte value",
+				"Byte value",
+			};
+
+		case OperandType.InlineI:
+			return new[] { "Int32 value" };
+
+		case OperandType.InlineI8:
+			return new[] { "Int64 value" };
+
+		case OperandType.ShortInlineR:
+			return new[] { "Single value" };
+
+		case OperandType.InlineR:
+			return new[] { "Double value" };
+
+		case OperandType.InlineBrTarget:
+			return new[] { "ILabel target" };
+
+		case OperandType.ShortInlineBrTarget:
+			return new[] { "ILabel target" };
+
+		case OperandType.InlineMethod:
+			return new[] { "IMethod method" };
+
+		case OperandType.InlineSig:
+			return new[]
+			{
+				"ICallingConventions conventions, IType returnType, IType[] requiredArguments, IType[] optionalArguments",
+				"ICallingConventions conventions, IType returnType, IType[] arguments",
+			};
+
+		case OperandType.InlineSwitch:
+			return new[] { "ILabel[] targets" };
+
+		case OperandType.InlineType:
+			return new[] { "IType type" };
+
+		case OperandType.InlineString:
+			return new[] { "String value" };
+
+		case OperandType.InlineField:
+			return new[] { "IField field" };
+
+		case OperandType.InlineTok:
+			return new[]
+			{
+				"IType typeToken",
+				"IMethod methodToken",
+				"IField fieldToken",
+			};
+
+		case OperandType.InlineVar:
+			return new[] { "Int16 value" };
+	}
+}
+
+void WriteInterfaceMethod( OpCode opcode )
+{
+	var name = opcode.Name.Replace( '.', '_' );
+	var args = GetArgsText( opcode );
+	foreach( var arg in args )
+	{
+		Write( $"\t\tvoid Emit_{name}({arg});\r\n");
+	}
+}
+
+void SwitchFlowControl( ref String ret, ref String genArgs, ref String arg1, ref List<(String type, String name)> args, ref List<String> constraints, OpCode opcode )
+{
+	switch( opcode.FlowControl )
+	{
+		case FlowControl.Branch:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Break:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Call:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Cond_Branch:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Meta:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Next:
+			//Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Phi:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Return:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+
+		case FlowControl.Throw:
+			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		break;
+	}
+}
+
+void SwitchStackPop( ref String ret, ref String genArgs, ref String arg1, ref List<(String type, String name)> args, ref List<String> constraints, OpCode opcode )
+{
+	switch( opcode.StackBehaviourPop )
+	{
+		case StackBehaviour.Pop0:
+
+		break;
+
+		case StackBehaviour.Pop1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Pop1_pop1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popi:
+			arg1 = $"IL<Int32, {arg1}>";
+		break;
+
+		case StackBehaviour.Popi_pop1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popi_popi:
+			arg1 = $"IL<Int32, IL<Int32, {arg1}>>";
+		break;
+
+		case StackBehaviour.Popi_popi8:
+			arg1 = $"IL<Int32, IL<Int64, {arg1}>>";
+		break;
+
+		case StackBehaviour.Popi_popr4:
+			arg1 = $"IL<Int32, IL<Single, {arg1}>>";
+		break;
+
+		case StackBehaviour.Popi_popr8:
+			arg1 = $"IL<Int32, IL<Double, {arg1}>>";
+		break;
+
+		case StackBehaviour.Popref:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_pop1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_pop1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_popi:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_popi8:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_popr4:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_popr8:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Popref_popi_popref:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+
+		case StackBehaviour.Varpop:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPop}\r\n");
+		break;
+	}
+}
+
+void SwitchStackPush( ref String ret, ref String genArgs, ref String arg1, ref List<(String type, String name)> args, ref List<String> constraints, OpCode opcode )
+{
+	switch( opcode.StackBehaviourPush )
+	{
+		case StackBehaviour.Push0:
+
+		break;
+
+		case StackBehaviour.Push1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPush}\r\n");
+		break;
+
+		case StackBehaviour.Push1_push1:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPush}\r\n");
+		break;
+
+		case StackBehaviour.Pushi:
+			ret = $"IL<Int32, {ret}>";
+		break;
+
+		case StackBehaviour.Pushi8:
+			ret = $"IL<Int64, {ret}>";
+		break;
+
+		case StackBehaviour.Pushr4:
+			ret = $"IL<Single, {ret}>";
+		break;
+
+		case StackBehaviour.Pushr8:
+			ret = $"IL<Double, {ret}>";
+		break;
+
+		case StackBehaviour.Pushref:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPush}\r\n");
+		break;
+
+		case StackBehaviour.Varpush:
+			Write( $"\t\t//{opcode.Name} {opcode.StackBehaviourPush}\r\n");
+		break;
+	}
+}
+
+void SwitchOperandType( ref String ret, ref String genArgs, ref String arg1, ref List<(String type, String name)> args, ref List<String> constraints, OpCode opcode )
+{
+	switch( opcode.OperandType )
+	{
+		case OperandType.InlineNone:
+		break;
+
+		case OperandType.ShortInlineVar:
+			args.Add(("Byte","index"));
+		break;
+
+		case OperandType.ShortInlineI:
+			args.Add(("Byte","value"));
+		break;
+
+		case OperandType.InlineI:
+			args.Add(("Int32","value"));
+		break;
+
+		case OperandType.InlineI8:
+			args.Add(("Int64","value"));
+		break;
+
+		case OperandType.ShortInlineR:
+			args.Add(("Single","value"));
+		break;
+
+		case OperandType.InlineR:
+			args.Add(("Double","value"));
+		break;
+
+		case OperandType.InlineBrTarget:
+			args.Add(("ILabel","target"));
+		break;
+
+		case OperandType.ShortInlineBrTarget:
+			args.Add(("ILabel","target"));
+		break;
+
+		case OperandType.InlineMethod:
+			args.Add(("IMethod","method"));
+		break;
+
+		case OperandType.InlineSig:
+			args.Add(( "ICallingConventions", "conventions" ));
+			args.Add(( "IType", "returnType" ));
+			args.Add(( "IType[]", "arguments" ));
+		break;
+
+		case OperandType.InlineSwitch:
+			args.Add(("ILabel[]","targets"));
+		break;
+
+		case OperandType.InlineType:
+			args.Add(("IType","type"));
+		break;
+
+		case OperandType.InlineString:
+			args.Add(("String","value"));
+		break;
+
+		case OperandType.InlineField:
+			args.Add(("IField","field"));
+		break;
+
+		case OperandType.InlineTok:
+			args.Add(("IType","typeToken"));
+		break;
+
+		case OperandType.InlineVar:
+			args.Add(("Int16","value"));
+		break;
+	}
+}
+
+
+
+(String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints) GenerateSig( OpCode opcode )
+{
+	var ret = "TStack";
+	var genArgs = "TStack";
+	var arg1 = "TStack";
+	var args = new List<(String type, String name)>();
+	List<String> constraints = new List<String>(new[] { "TStack : ILStack" } );
+
+	SwitchFlowControl( ref ret, ref genArgs, ref arg1, ref args, ref constraints, opcode );
+	SwitchStackPop( ref ret, ref genArgs, ref arg1, ref args, ref constraints, opcode );
+	SwitchStackPush( ref ret, ref genArgs, ref arg1, ref args, ref constraints, opcode );
+	SwitchOperandType( ref ret, ref genArgs, ref arg1, ref args, ref constraints, opcode );
+
+	return (ret, genArgs, arg1, args.ToArray(), constraints.ToArray());
+}
+
+String[] GenerateImpl( OpCode opcode, (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints) sig )
+{
+	List<String> impl = new List<String>();
+	
+	String Projection( String input )
+	{
+		return input.Substring( input.Trim().LastIndexOf(' ') );
+	}
+	var callArgs = String.Join( ", ", sig.args.Select( (s) => s.name ).ToArray() );
+
+	impl.Add( $"stack.bottom.reciever.Emit_{opcode.Name.Replace('.','_')}({callArgs});" );
+
+	impl.Add( "return default;" );
+
+
+	return impl.ToArray();
+}
+
+void WriteExtensionMethod( String name, OpCode opcode )
+{
+
+	if( name == "" )
+	{
+		Write( $"\t\t//{opcode.Name} No aliased name\r\n" );
+		name = $"@{opcode.Name.Replace( '.', '_' )}";
+	}
+	(String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[] overloads;
+	if( !generationData.TryGetValue( opcode.Name, out overloads ) )
+	{
+		(String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints) sig;
+		if( !sigOverrides.TryGetValue( opcode.Name, out sig ) ) sig = GenerateSig( opcode );
+		String[] impl;
+		if( !implOverrides.TryGetValue( opcode.Name, out impl ) ) impl = GenerateImpl( opcode, sig );
+
+		overloads = new[] {( sig.ret, sig.genArgs, sig.arg1, sig.args, sig.constraints, impl) };
+	}
+
+	foreach( var (ret, genArgs, arg1, args, constraints, impl) in overloads )
+	{
+		Write( $"\t\tpublic static {ret} {name}<{genArgs}>( this {arg1} stack" );
+		if( args != null ) foreach( var (t,n) in args ) Write( $", {t} {n}" );
+		Write( ")");
+		foreach( var con in constraints ) Write( $"\r\n\t\t\twhere {con}");
+		Write( "\r\n\t\t{" );
+		foreach( var line in impl ) Write( $"\r\n\t\t\t{line}");
+		Write( "\r\n\t\t}\r\n" );
+		Write( "\r\n" );
+	}
+	Write( "\r\n");
+}
+#>
+namespace EmitHelper.IL
+{
+	using System;
+
+	public partial interface ILabel 
+	{ }
+	public partial interface IMethod 
+	{ }
+	public partial interface IField 
+	{ }
+	public partial interface IType 
+	{ }
+	public partial interface ICallingConventions 
+	{ }
+
+	public partial interface ILEmitReciever
+	{
+<#
+foreach( var oc in allOpcodes )
+{
+	WriteInterfaceMethod( oc );
+}
+#>
+	}
+}
+
+namespace EmitHelper.IL.ShortExtensions
+{
+	using System;
+
+	public static partial class ILExtensions
+	{
+<#
+foreach( var oc in allOpcodes )
+{
+	var name = oc.Name;
+	if( opcodeAliases.TryGetValue( name, out var v ) )
+	{
+		if( v.skip ) continue;
+		WriteExtensionMethod( v.shortName, oc );
+	} else
+	{
+		Write( $"\t{{ \"{name}\", ( \"\", \"\", false, false ) }},\r\n" );
+	}
+}
+#>
+	}
+}
+
+namespace EmitHelper.IL.LongExtensions
+{
+	using System;
+
+	public static partial class ILExtensions
+	{
+<#
+foreach( var oc in allOpcodes )
+{
+	var name = oc.Name;
+	if( opcodeAliases.TryGetValue( name, out var v ) )
+	{
+		if( v.skip ) continue;
+		//WriteExtensionMethod( v.longName, oc );
+	} else
+	{
+		//Write( $"// Unaliased Name: {name}\r\n" );
+	}
+}
+#>
+	}
+}

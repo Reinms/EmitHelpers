@@ -20,6 +20,66 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="IL\Generated\Add - Copy %282%29.tt">
+      <LastGenOutput>Cpblk.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Add - Copy %283%29.tt">
+      <LastGenOutput>Cpblk.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Add - Copy.tt">
+      <LastGenOutput>Cpblk.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\And - Copy %282%29.tt">
+      <LastGenOutput>And.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\And - Copy %283%29.tt">
+      <LastGenOutput>And.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\And - Copy.tt">
+      <LastGenOutput>And.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy %282%29 - Copy.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy %282%29.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy %283%29.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy - Copy %282%29.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy - Copy.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Arglist - Copy.tt">
+      <LastGenOutput>Arglist.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Castclass - Copy %282%29.tt">
+      <LastGenOutput>Castclass.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Castclass - Copy %283%29.tt">
+      <LastGenOutput>Castclass.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IL\Generated\Castclass - Copy.tt">
+      <LastGenOutput>Castclass.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="IL\Generated\Cpobj.tt">
       <LastGenOutput>Cpobj.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -199,6 +259,111 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="IL\Generated\And - Copy %282%29 - Copy.cs">
+      <DependentUpon>And - Copy (2).cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy %282%29.cs">
+      <DependentUpon>And.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy %283%29.cs">
+      <DependentUpon>And.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy - Copy %282%29.cs">
+      <DependentUpon>And - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy - Copy - Copy.cs">
+      <DependentUpon>And - Copy - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy - Copy.cs">
+      <DependentUpon>And - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\And - Copy.cs">
+      <DependentUpon>And.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy %282%29 - Copy.cs">
+      <DependentUpon>Arglist - Copy (2).cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy %282%29.cs">
+      <DependentUpon>Arglist.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy %283%29.cs">
+      <DependentUpon>Arglist.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy - Copy %282%29.cs">
+      <DependentUpon>Arglist - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy - Copy - Copy.cs">
+      <DependentUpon>Arglist - Copy - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy - Copy.cs">
+      <DependentUpon>Arglist - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Arglist - Copy.cs">
+      <DependentUpon>Arglist.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy %282%29 - Copy.cs">
+      <DependentUpon>Castclass - Copy (2).cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy %282%29.cs">
+      <DependentUpon>Castclass.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy %283%29.cs">
+      <DependentUpon>Castclass.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy - Copy %282%29.cs">
+      <DependentUpon>Castclass - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy - Copy - Copy.cs">
+      <DependentUpon>Castclass - Copy - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy - Copy.cs">
+      <DependentUpon>Castclass - Copy.cs</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="IL\Generated\Castclass - Copy.cs">
+      <DependentUpon>Castclass.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="IL\Generated\Cpblk.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -349,6 +514,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Xor.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IL\Generated\Old\" />
   </ItemGroup>
 
 </Project>
