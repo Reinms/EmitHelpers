@@ -1253,10 +1253,10 @@ foreach( var oc in allOpcodes )
 	if( opcodeAliases.TryGetValue( name, out var v ) )
 	{
 		if( v.skip ) continue;
-		//WriteExtensionMethod( v.longName, oc );
+		WriteExtensionMethod( v.longName, oc );
 	} else
 	{
-		//Write( $"// Unaliased Name: {name}\r\n" );
+		Write( $"\t{{ \"{name}\", ( \"\", \"\", false, false ) }},\r\n" );
 	}
 }
 #>
