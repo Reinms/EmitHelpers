@@ -15,7 +15,7 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "add.ovf", ( "", "", true, false ) },								//X
 	{ "add.ovf.un", ( "", "", true, false ) },							//X
 	{ "and", ( "And", "And", false, false ) },							//----------
-	{ "arglist", ( "Arglist", "ArgList", false, false ) },				//	Pointers
+	{ "arglist", ( "Arglist", "ArgList", false, false ) },				//----------
 	{ "beq", ( "Beq", "BranchEqual", false, false ) },					//	Branch
 	{ "beq.s", ( "", "", true, false ) },								//X
 	{ "bge", ( "Bge", "BranchGreaterOrEqual", false, false ) },			//	Branch
@@ -48,66 +48,66 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "calli", ( "Calli", "CallIndirect", false, false ) },				//	Call
 	{ "callvirt", ( "Callvirt", "CallVirtual", false, false ) },		//	Call
 	{ "castclass", ( "Castclass", "CastClass", false, false ) },		//----------
-	{ "ceq", ( "Ceq", "CmpEqual", false, false ) },						//	Compare
-	{ "cgt", ( "Cgt", "CmpGreater", false, false ) },					//	Compare
+	{ "ceq", ( "Cmp", "Compare", false, false ) },						//----------
+	{ "cgt", ( "Cgt", "CmpGreater", true, false ) },					//X
 	{ "cgt.un", ( "", "", true, false ) },								//X
 	{ "ckfinite", ( "Ckfinite", "CheckFinite", false, false ) },		//----------
-	{ "clt", ( "Clt", "CmpLess", false, false ) },						//	Compare
+	{ "clt", ( "Clt", "CmpLess", true, false ) },						//X
 	{ "clt.un", ( "", "", true, false ) },								//X
 	{ "constrained.", ( "Constrained", "Constrained", false, false ) },	//	Call Prefix
-	{ "conv.i", ( "", "", false, false ) },								//	Convert
-	{ "conv.i1", ( "", "", false, false ) },							//	Convert
-	{ "conv.i2", ( "", "", false, false ) },							//	Convert
-	{ "conv.i4", ( "", "", false, false ) },							//	Convert
-	{ "conv.i8", ( "", "", false, false ) },							//	Convert
-	{ "conv.ovf.i", ( "", "", false, false ) },							//	Convert
-	{ "conv.ovf.i.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i1", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i1.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i2", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i2.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i4", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i4.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i8", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.i8.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u", ( "", "", false, false ) },							//	Convert
-	{ "conv.ovf.u.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u1", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u1.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u2", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u2.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u4", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u4.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u8", ( "", "", false, false ) },						//	Convert
-	{ "conv.ovf.u8.un", ( "", "", false, false ) },						//	Convert
-	{ "conv.r.un", ( "", "", false, false ) },							//	Convert
-	{ "conv.r4", ( "", "", false, false ) },							//	Convert
-	{ "conv.r8", ( "", "", false, false ) },							//	Convert
-	{ "conv.u", ( "", "", false, false ) },								//	Convert
-	{ "conv.u1", ( "", "", false, false ) },							//	Convert
-	{ "conv.u2", ( "", "", false, false ) },							//	Convert
-	{ "conv.u4", ( "", "", false, false ) },							//	Convert
-	{ "conv.u8", ( "", "", false, false ) },							//	Convert
-	{ "cpblk", ( "", "", false, false ) },								//	Pointer
-	{ "cpobj", ( "", "", false, false ) },								//	Pointer
-	{ "div", ( "Div", "Divide", false, false ) },						//
+	{ "conv.i", ( "", "", false, false ) },								//----------
+	{ "conv.i1", ( "", "", true, false ) },								//X
+	{ "conv.i2", ( "", "", true, false ) },								//X
+	{ "conv.i4", ( "", "", true, false ) },								//X
+	{ "conv.i8", ( "", "", true, false ) },								//X
+	{ "conv.ovf.i", ( "", "", true, false ) },							//X
+	{ "conv.ovf.i.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.i1", ( "", "", true, false ) },							//X
+	{ "conv.ovf.i1.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.i2", ( "", "", true, false ) },							//X
+	{ "conv.ovf.i2.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.i4", ( "", "", true, false ) },							//X
+	{ "conv.ovf.i4.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.i8", ( "", "", true, false ) },							//X
+	{ "conv.ovf.i8.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.u", ( "", "", true, false ) },							//X
+	{ "conv.ovf.u.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.u1", ( "", "", true, false ) },							//X
+	{ "conv.ovf.u1.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.u2", ( "", "", true, false ) },							//X
+	{ "conv.ovf.u2.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.u4", ( "", "", true, false ) },							//X
+	{ "conv.ovf.u4.un", ( "", "", true, false ) },						//X
+	{ "conv.ovf.u8", ( "", "", true, false ) },							//X
+	{ "conv.ovf.u8.un", ( "", "", true, false ) },						//X
+	{ "conv.r.un", ( "", "", true, false ) },							//X
+	{ "conv.r4", ( "", "", true, false ) },								//X
+	{ "conv.r8", ( "", "", true, false ) },								//X
+	{ "conv.u", ( "", "", true, false ) },								//X
+	{ "conv.u1", ( "", "", true, false ) },								//X
+	{ "conv.u2", ( "", "", true, false ) },								//X
+	{ "conv.u4", ( "", "", true, false ) },								//X
+	{ "conv.u8", ( "", "", true, false ) },								//X
+	{ "cpblk", ( "", "", false, false ) },								//----------
+	{ "cpobj", ( "", "", false, false ) },								//----------
+	{ "div", ( "Div", "Divide", false, false ) },						//----------
 	{ "div.un", ( "", "", true, false ) },								//X
-	{ "dup", ( "", "", false, false ) },								//
+	{ "dup", ( "", "", false, false ) },								//----------
 	{ "endfilter", ( "", "", false, false ) },							//	Branch
 	{ "endfinally", ( "", "", false, false ) },							//	Branch
-	{ "initblk", ( "", "", false, false ) },							//	Pointer
-	{ "initobj", ( "", "", false, false ) },							//	Pointer
-	{ "isinst", ( "", "", false, false ) },								//
+	{ "initblk", ( "", "", false, false ) },							//----------
+	{ "initobj", ( "", "", false, false ) },							//----------
+	{ "isinst", ( "", "", false, false ) },								//----------
 	{ "jmp", ( "", "", false, false ) },								//	Call
-	{ "ldarg", ( "", "", false, false ) },								//	
+	{ "ldarg", ( "", "", false, false ) },								//----------
 	{ "ldarg.0", ( "", "", true, false ) },								//X
 	{ "ldarg.1", ( "", "", true, false ) },								//X
 	{ "ldarg.2", ( "", "", true, false ) },								//X
 	{ "ldarg.3", ( "", "", true, false ) },								//X
 	{ "ldarg.s", ( "", "", true, false ) },								//X
-	{ "ldarga", ( "", "", false, false ) },								//	Pointer
+	{ "ldarga", ( "", "", false, false ) },								//----------
 	{ "ldarga.s", ( "", "", true, false ) },							//X
-	{ "ldc.i4", ( "", "", false, false ) },								//
+	{ "ldc.i4", ( "", "", false, false ) },								//----------
 	{ "ldc.i4.0", ( "", "", true, false ) },							//X
 	{ "ldc.i4.1", ( "", "", true, false ) },							//X
 	{ "ldc.i4.2", ( "", "", true, false ) },							//X
@@ -118,11 +118,11 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "ldc.i4.7", ( "", "", true, false ) },							//X
 	{ "ldc.i4.8", ( "", "", true, false ) },							//X
 	{ "ldc.i4.m1", ( "", "", true, false ) },							//X
-	{ "ldc.i4.s", ( "", "", false, false ) },							//X
-	{ "ldc.i8", ( "", "", false, false ) },								//X
-	{ "ldc.r4", ( "", "", false, false ) },								//X
-	{ "ldc.r8", ( "", "", false, false ) },								//X
-	{ "ldelem", ( "", "", false, false ) },								//	Array
+	{ "ldc.i4.s", ( "", "", true, false ) },							//X
+	{ "ldc.i8", ( "", "", true, false ) },								//X
+	{ "ldc.r4", ( "", "", true, false ) },								//X
+	{ "ldc.r8", ( "", "", true, false ) },								//X
+	{ "ldelem", ( "", "", false, false ) },								//----------
 	{ "ldelem.i", ( "", "", true, false ) },							//X
 	{ "ldelem.i1", ( "", "", true, false ) },							//X
 	{ "ldelem.i2", ( "", "", true, false ) },							//X
@@ -134,11 +134,11 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "ldelem.u1", ( "", "", true, false ) },							//X
 	{ "ldelem.u2", ( "", "", true, false ) },							//X
 	{ "ldelem.u4", ( "", "", true, false ) },							//X
-	{ "ldelema", ( "", "", false, false ) },							//	Array	Pointer
-	{ "ldfld", ( "", "", false, false ) },								//
-	{ "ldflda", ( "", "", false, false ) },								//	Pointer
-	{ "ldftn", ( "", "", false, false ) },								//
-	{ "ldind.i", ( "", "", false, false ) },							//	Pointer
+	{ "ldelema", ( "", "", false, false ) },							//----------
+	{ "ldfld", ( "", "", false, false ) },								//----------
+	{ "ldflda", ( "", "", false, false ) },								//----------
+	{ "ldftn", ( "", "", false, false ) },								// Call
+	{ "ldind.i", ( "", "", true, false ) },								//X
 	{ "ldind.i1", ( "", "", true, false ) },							//X
 	{ "ldind.i2", ( "", "", true, false ) },							//X
 	{ "ldind.i4", ( "", "", true, false ) },							//X
@@ -149,36 +149,36 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "ldind.u1", ( "", "", true, false ) },							//X
 	{ "ldind.u2", ( "", "", true, false ) },							//X
 	{ "ldind.u4", ( "", "", true, false ) },							//X
-	{ "ldlen", ( "", "", false, false ) },								//	Array
-	{ "ldloc", ( "", "", false, false ) },								//
+	{ "ldlen", ( "", "", false, false ) },								//----------
+	{ "ldloc", ( "", "", false, false ) },								//----------
 	{ "ldloc.0", ( "", "", true, false ) },								//X
 	{ "ldloc.1", ( "", "", true, false ) },								//X
 	{ "ldloc.2", ( "", "", true, false ) },								//X
 	{ "ldloc.3", ( "", "", true, false ) },								//X
 	{ "ldloc.s", ( "", "", true, false ) },								//X
-	{ "ldloca", ( "", "", false, false ) },								//	Pointer
+	{ "ldloca", ( "", "", false, false ) },								//----------
 	{ "ldloca.s", ( "", "", true, false ) },							//X
-	{ "ldnull", ( "", "", false, false ) },								//
-	{ "ldobj", ( "", "", false, false ) },								//
-	{ "ldsfld", ( "", "", false, false ) },								//
-	{ "ldsflda", ( "", "", false, false ) },							//	Pointer
-	{ "ldstr", ( "", "", false, false ) },								//
-	{ "ldtoken", ( "", "", false, false ) },							//
-	{ "ldvirtftn", ( "", "", false, false ) },							//	Call Pointer
+	{ "ldnull", ( "", "", false, false ) },								//----------
+	{ "ldobj", ( "", "", false, false ) },								//----------
+	{ "ldsfld", ( "", "", false, false ) },								//----------
+	{ "ldsflda", ( "", "", false, false ) },							//----------
+	{ "ldstr", ( "", "", true, false ) },								//X					
+	{ "ldtoken", ( "", "", false, false ) },							//----------
+	{ "ldvirtftn", ( "", "", false, false ) },							//	Call
 	{ "leave", ( "", "", false, false ) },								//	Branch
 	{ "leave.s", ( "", "", true, false ) },								//X
-	{ "localloc", ( "", "", false, false ) },							//	Pointer
-	{ "mkrefany", ( "", "", false, false ) },							//	Pointer
-	{ "mul", ( "", "", false, false ) },								//
+	{ "localloc", ( "", "", false, false ) },							//----------
+	{ "mkrefany", ( "", "", false, false ) },							//----------
+	{ "mul", ( "", "", false, false ) },								//----------
 	{ "mul.ovf", ( "", "", true, false ) },								//X
 	{ "mul.ovf.un", ( "", "", true, false ) },							//X
-	{ "neg", ( "", "", false, false ) },								//
-	{ "newarr", ( "", "", false, false ) },								//	Array
+	{ "neg", ( "", "", false, false ) },								//----------
+	{ "newarr", ( "", "", false, false ) },								//----------
 	{ "newobj", ( "", "", false, false ) },								//	Call
-	{ "nop", ( "Nop", "NoOp", false, false ) },							//
-	{ "not", ( "", "", false, false ) },								//
-	{ "or", ( "", "", false, false ) },									//
-	{ "pop", ( "", "", false, false ) },								//
+	{ "nop", ( "Nop", "NoOp", false, false ) },							//----------
+	{ "not", ( "", "", false, false ) },								//----------
+	{ "or", ( "", "", false, false ) },									//----------
+	{ "pop", ( "", "", false, false ) },								//----------
 	{ "prefix1", ( "", "", true, false ) },								//X
 	{ "prefix2", ( "", "", true, false ) },								//X
 	{ "prefix3", ( "", "", true, false ) },								//X
@@ -187,20 +187,20 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "prefix6", ( "", "", true, false ) },								//X
 	{ "prefix7", ( "", "", true, false ) },								//X
 	{ "prefixref", ( "", "", true, false ) },							//X
-	{ "readonly.", ( "", "", false, false ) },							//	Pointer
-	{ "refanytype", ( "", "", false, false ) },							//	Pointer
-	{ "refanyval", ( "", "", false, false ) },							//	Pointer
-	{ "rem", ( "", "", false, false ) },								//
-	{ "rem.un", ( "", "", false, false ) },								//X
+	{ "readonly.", ( "", "", false, false ) },							//	Prefix
+	{ "refanytype", ( "", "", false, false ) },							//----------
+	{ "refanyval", ( "", "", false, false ) },							//----------
+	{ "rem", ( "", "", false, false ) },								//----------
+	{ "rem.un", ( "", "", true, false ) },								//X
 	{ "ret", ( "", "", false, false ) },								//	Return
 	{ "rethrow", ( "", "", false, false ) },							//	Branch
-	{ "shl", ( "", "", false, false ) },								//
-	{ "shr", ( "", "", false, false ) },								//
+	{ "shl", ( "", "", false, false ) },								//----------
+	{ "shr", ( "", "", false, false ) },								//----------
 	{ "shr.un", ( "", "", true, false ) },								//X
-	{ "sizeof", ( "", "", false, false ) },								//
-	{ "starg", ( "", "", false, false ) },								//
+	{ "sizeof", ( "", "", false, false ) },								//----------
+	{ "starg", ( "", "", false, false ) },								//----------
 	{ "starg.s", ( "", "", true, false ) },								//X
-	{ "stelem", ( "", "", false, false ) },								//	Array
+	{ "stelem", ( "", "", false, false ) },								//----------
 	{ "stelem.i", ( "", "", true, false ) },							//X
 	{ "stelem.i1", ( "", "", true, false ) },							//X
 	{ "stelem.i2", ( "", "", true, false ) },							//X
@@ -209,8 +209,8 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "stelem.r4", ( "", "", true, false ) },							//X
 	{ "stelem.r8", ( "", "", true, false ) },							//X
 	{ "stelem.ref", ( "", "", true, false ) },							//X
-	{ "stfld", ( "", "", false, false ) },								//
-	{ "stind.i", ( "", "", false, false ) },							//	Pointer
+	{ "stfld", ( "", "", false, false ) },								//----------
+	{ "stind.i", ( "", "", true, false ) },								//X
 	{ "stind.i1", ( "", "", true, false ) },							//X
 	{ "stind.i2", ( "", "", true, false ) },							//X
 	{ "stind.i4", ( "", "", true, false ) },							//X
@@ -218,24 +218,24 @@ var opcodeAliases = new Dictionary<String, (String shortName, String longName, B
 	{ "stind.r4", ( "", "", true, false ) },							//X
 	{ "stind.r8", ( "", "", true, false ) },							//X
 	{ "stind.ref", ( "", "", true, false ) },							//X
-	{ "stloc", ( "", "", false, false ) },								//
+	{ "stloc", ( "", "", false, false ) },								//----------
 	{ "stloc.0", ( "", "", true, false ) },								//X
 	{ "stloc.1", ( "", "", true, false ) },								//X
 	{ "stloc.2", ( "", "", true, false ) },								//X
 	{ "stloc.3", ( "", "", true, false ) },								//X
 	{ "stloc.s", ( "", "", true, false ) },								//X
-	{ "stobj", ( "", "", false, false ) },								//	Pointer
-	{ "stsfld", ( "", "", false, false ) },								//
-	{ "sub", ( "", "", false, false ) },								//
+	{ "stobj", ( "", "", false, false ) },								//----------
+	{ "stsfld", ( "", "", false, false ) },								//----------
+	{ "sub", ( "", "", false, false ) },								//----------
 	{ "sub.ovf", ( "", "", true, false ) },								//X
 	{ "sub.ovf.un", ( "", "", true, false ) },							//X
 	{ "switch", ( "", "", false, false ) },								//	Branch
-	{ "tail.", ( "", "", false, false ) },								//	Call
+	{ "tail.", ( "", "", false, false ) },								//	Call Prefix
 	{ "throw", ( "", "", false, false ) },								//	Branch
-	{ "unaligned.", ( "", "", false, false ) },							//	Pointer
-	{ "unbox", ( "", "", false, false ) },								//
-	{ "unbox.any", ( "", "", false, false ) },							//
-	{ "volatile.", ( "", "", false, false ) },							//	Pointer
+	{ "unaligned.", ( "", "", false, false ) },							//  Prefix
+	{ "unbox", ( "", "", false, false ) },								//----------
+	{ "unbox.any", ( "", "", false, false ) },							//----------
+	{ "volatile.", ( "", "", false, false ) },							//	Prefix
 	{ "xor", ( "Xor", "XOr", false, false ) },							//----------
 };
 
@@ -257,37 +257,91 @@ var generationData = new Dictionary<String, (String ret, String genArgs, String 
 			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
 		}),
 	}},
-
-
-
-
-
-
-	{ "box", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{ "div", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
 	{
-		( "IL<ILBoxed<TBoxed>, TStack>", "TBoxed, TStack", "IL<TBoxed, TStack>", null , new[] { "TStack : ILStack", "TBoxed : struct", }, new[] 
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
 		{
-			"//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff",
-			"return new IL<ILBoxed<TBoxed>, TStack>( stack.Pop() );"
+			"stack.bottom.reciever.Emit_div();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
 		}),
-		( "IL<ILBoxed<TBoxedTo>, TStack>", "TBoxedTo, TTypeRef, TBoxedFrom, TStack", "IL<TBoxedFrom, TStack>", new[] { ("TTypeRef", "type") }, new[] { "TStack : ILStack", "TBoxedTo : struct", "TBoxedFrom : struct", "TTypeRef : ITypeRef<TBoxedTo>", }, new[] 
+	}},
+	{ "mul", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
 		{
-			"stack.bottom.reciever.Emit_box(type);",
-			"return new IL<ILBoxed<TBoxedTo>, TStack>( stack.Pop() );"
+			"stack.bottom.reciever.Emit_mul();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "or", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_or();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "rem", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_rem();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "shl", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_shl();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "shr", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_shr();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "sub", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_sub();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "xor", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_xor();",
+			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
 		}),
 	}},
 
 
-	{ "castclass", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+
+
+
+	{ "neg", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
 	{
-		( "IL<TCastTo, TStack>", "TCastTo, TCastFrom, TTypeRef, TStack", "IL<TCastFrom, TStack>", new[] { ("TTypeRef", "type"), } , new[] { "TStack : ILStack", "TBoxed : struct", "TTypeRef : ITypeRef<TCastTo>", }, new[] 
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, TStack>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
 		{
-			"stack.bottom.reciever.Emit_castclass(type);",
-			"return new IL<TCastTo, TStack>( stack.Pop() );"
+			"stack.bottom.reciever.Emit_neg();",
+			"return new IL<Int32, TStack>( stack.Pop() );"
 		}),
 	}},
-
-
+	{ "not", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TStack", "IL<Int32, TStack>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_not();",
+			"return new IL<Int32, TStack>( stack.Pop() );"
+		}),
+	}},
 	{ "ckfinite", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
 	{
 		( "IL<Int32, TStack>", "TStack", "IL<Single, TStack>", null , new[] { "TStack : ILStack" }, new[] 
@@ -304,22 +358,432 @@ var generationData = new Dictionary<String, (String ret, String genArgs, String 
 
 
 
-	{ "div", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+
+
+	{ "dup", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
 	{
-		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		( "IL<TDuped, IL<TDuped, TStack>>", "TDuped, TStack", "IL<TDuped, TStack>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
 		{
-			"stack.bottom.reciever.Emit_div();",
-			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+			"stack.bottom.reciever.Emit_dup();",
+			"return new IL<TDuped, IL<TDuped, TStack>>( stack );"
+		}),
+	}},
+	{ "nop", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TStack", "TStack", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_nop();",
+			"return stack;"
+		}),
+	}},
+	{ "pop", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TPopped, TStack", "IL<TPopped, TStack>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_pop();",
+			"return stack.Pop();"
 		}),
 	}},
 
 
-	{ "xor", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+
+
+
+	{ "ldc.i4", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
 	{
-		( "IL<Int32, TStack>", "TStack", "IL<Int32, IL<Int32, TStack>>", Array.Empty<(String,String)>(), new[] { "TStack : ILStack" }, new[] 
+		( "IL<Int32, TStack>", "TStack", "TStack", new[] { ("Int32", "value"), }, new[] { "TStack : ILStack" }, new[] 
 		{
-			"stack.bottom.reciever.Emit_xor();",
-			"return new IL<Int32, TStack>( stack.Pop().Pop() );"
+			"stack.bottom.reciever.Emit_ldc_i4(value);",
+			"return new IL<Int32, TStack>( stack );"
+		}),
+	}},
+	{ "ldnull", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILNull, TStack>", "TStack", "TStack", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldnull();",
+			"return new IL<ILNull, TStack>( stack );"
+		}),
+	}},
+
+
+
+
+
+	{ "box", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILBoxed<TBoxed>, TStack>", "TBoxed, TStack", "IL<TBoxed, TStack>", null , new[] { "TStack : ILStack", "TBoxed : struct", }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff",
+			"return new IL<ILBoxed<TBoxed>, TStack>( stack.Pop() );"
+		}),
+		( "IL<ILBoxed<TBoxedTo>, TStack>", "TBoxedTo, TTypeRef, TBoxedFrom, TStack", "IL<TBoxedFrom, TStack>", new[] { ("TTypeRef", "type") }, new[] { "TStack : ILStack", "TBoxedTo : struct", "TBoxedFrom : struct", "TTypeRef : ITypeRef<TBoxedTo>", }, new[] 
+		{
+			"stack.bottom.reciever.Emit_box(type.type);",
+			"return new IL<ILBoxed<TBoxedTo>, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "castclass", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TCastTo, TStack>", "TCastTo, TCastFrom, TTypeRef, TStack", "IL<TCastFrom, TStack>", new[] { ("TTypeRef", "type"), } , new[] { "TStack : ILStack", "TTypeRef : ITypeRef<TCastTo>", }, new[] 
+		{
+			"stack.bottom.reciever.Emit_castclass(type.type);",
+			"return new IL<TCastTo, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "conv.i", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TTo, TStack>", "TConv, TFrom, TTo, TStack", "IL<TFrom, TStack>", new[] { ("TConv", "conversion"), }, new[] { "TStack : ILStack", "TConv : ILConvert.IConvert<TFrom,TTo>", }, new[] 
+		{
+			"conversion.Emit( stack.bottom.reciever );",
+			"return new IL<TTo, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "isinst", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TCastTo, TStack>", "TCastTo, TCastFrom, TTypeRef, TStack", "IL<TCastFrom, TStack>", new[] { ("TTypeRef", "type"), } , new[] { "TStack : ILStack", "TTypeRef : ITypeRef<TCastTo>", }, new[] 
+		{
+			"stack.bottom.reciever.Emit_isinst(type.type);",
+			"return new IL<TCastTo, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "unbox", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TBoxed>, TStack>", "TBoxed, TStack", "IL<ILBoxed<TBoxed>, TStack>", null , new[] { "TStack : ILStack", "TBoxed : struct", }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff",
+			"return new IL<ILRef<TBoxed>, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "unbox.any", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TBoxed, TStack>", "TBoxed, TStack", "IL<ILBoxed<TBoxed>, TStack>", null , new[] { "TStack : ILStack", "TBoxed : struct", }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff",
+			"return new IL<TBoxed, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "ldarg", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TArg, TStack>", "TArg, TStack", "TStack", new[] { ("ILArgument<TArg>", "argument"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldarg(argument.index);",
+			"return new IL<TArg, TStack>( stack );"
+		}),
+	}},
+	{ "ldarga", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TArg>, TStack>", "TArg, TStack", "TStack", new[] { ("ILArgument<TArg>", "argument"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldarga(argument.index);",
+			"return new IL<ILRef<TArg>, TStack>( stack );"
+		}),
+	}},
+	{ "starg", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TArg, TStack", "IL<TArg, TStack>", new[] { ("ILArgument<TArg>", "argument"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_starg(argument.index);",
+			"return stack.Pop();"
+		}),
+	}},
+
+
+
+
+
+	{ "ldloc", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TLoc, TStack>", "TLoc, TStack", "TStack", new[] { ("ILLocal<TLoc>", "local"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldloc(local.index);",
+			"return new IL<TLoc, TStack>( stack );"
+		}),
+	}},
+	{ "ldloca", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TLoc>, TStack>", "TLoc, TStack", "TStack", new[] { ("ILLocal<TLoc>", "local"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldloca(local.index);",
+			"return new IL<ILRef<TLoc>, TStack>( stack );"
+		}),
+	}},
+	{ "stloc", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TLoc, TStack", "IL<TLoc, TStack>", new[] { ("ILLocal<TLoc>", "local"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_stloc(local.index);",
+			"return stack.Pop();"
+		}),
+	}},
+
+
+
+
+
+	{ "ldsfld", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TValue, TStack>", "TValue, TStack", "TStack", new[] { ("ILSField<TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldsfld(field.field);",
+			"return new IL<TValue, TStack>( stack );"
+		}),
+	}},
+	{ "ldsflda", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TValue>, TStack>", "TValue, TStack", "TStack", new[] { ("ILSField<TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldsflda(field.field);",
+			"return new IL<ILRef<TValue>, TStack>( stack );"
+		}),
+	}},
+	{ "stsfld", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TValue, TStack", "IL<TValue, TStack>", new[] { ("ILSField<TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_stsfld(field.field);",
+			"return stack.Pop();"
+		}),
+	}},
+
+
+
+
+
+	{ "ldfld", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TValue, TStack>", "TOn, TValue, TStack", "IL<TOn, TStack>", new[] { ("ILField<TOn,TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldsfld(field.field);",
+			"return new IL<TValue, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "ldflda", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TValue>, TStack>", "TOn, TValue, TStack", "IL<TOn, TStack>", new[] { ("ILField<TOn,TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldsflda(field.field);",
+			"return new IL<ILRef<TValue>, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "stfld", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TOn, TValue, TStack", "IL<TValue, IL<TOn, TStack>>", new[] { ("ILField<TOn,TValue>", "field"), } , new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_stsfld(field.field);",
+			"return stack.Pop().Pop();"
+		}),
+	}},
+
+
+
+
+
+	{ "ldelem", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TElem, TStack>", "TElem, TStack", "IL<ILIndex ,IL<ILArray<TElem>, TStack>>", null , new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_ldsfld(field.field);",
+			"return new IL<TElem, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "ldelema", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILRef<TElem>, TStack>", "TElem, TStack", "IL<ILIndex, IL<ILArray<TElem>, TStack>>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_ldsflda(field.field);",
+			"return new IL<ILRef<TElem>, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+	{ "stelem", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TElem, TStack", "IL<TElem,IL<ILIndex, IL<ILArray<TElem>, TStack>>>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_stsfld(field.field);",
+			"return stack.Pop().Pop().Pop();"
+		}),
+	}},
+
+
+
+
+
+	{ "ldobj", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TValue, TStack>", "TValue, TStack", "IL<ILRef<TValue>, TStack>", null , new[] { "TStack : ILStack", "TValue : struct" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_ldsfld(field.field);",
+			"return new IL<TValue, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "stobj", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TValue, TStack", "IL<TValue, IL<ILRef<TValue>, TStack>>", null, new[] { "TStack : ILStack", "TValue : struct" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_stsfld(field.field);",
+			"return stack.Pop().Pop();"
+		}),
+	}},
+
+
+
+	
+
+	{ "ldtoken", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<RuntimeFieldHandle, TStack>", "TStack", "TStack", new[] { ("IField", "field"), }, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldtoken(field);",
+			"return new IL<RuntimeFieldHandle, TStack>( stack );"
+		}),
+		( "IL<RuntimeMethodHandle, TStack>", "TStack", "TStack", new[] { ("IMethod", "method"), }, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldtoken(method);",
+			"return new IL<RuntimeMethodHandle, TStack>( stack );"
+		}),
+		( "IL<RuntimeTypeHandle, TStack>", "TStack", "TStack", new[] { ("IType", "type"), }, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldtoken(type);",
+			"return new IL<RuntimeTypeHandle, TStack>( stack );"
+		}),
+	}},
+	{ "sizeof", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<UInt32, TStack>", "TType, TStack", "TStack", new[] { ("TType", "type"), }, new[] { "TStack : ILStack", "TType : IType" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_sizeof(type);",
+			"return new IL<UInt32, TStack>( stack );"
+		}),
+	}},
+
+
+
+
+
+	{ "ldlen", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<Int32, TStack>", "TElem, TStack", "IL<ILArray<TElem>, TStack>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_ldlen();",
+			"return new IL<Int32, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "newarr", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILArray<TElem>, TStack>", "TElem, TType, TStack", "IL<ILLength, TStack>", new[] { ("TType", "elementType"), }, new[] { "TStack : ILStack", "TType : ITypeRef<TElem>" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_newarr(elementType.type);",
+			"return new IL<ILArray<TElem>, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "ceq", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<TRes, TStack>", "TCompare, T1, T2, TRes, TStack", "IL<T2, IL<T1, TStack>>", new[] { ("TCompare", "comparison"), }, new[] { "TStack : ILStack", "TCompare : ILCompare.ICompare<T2,T1,TRes>" }, new[] 
+		{
+			"comparison.Emit( stack.bottom.reciever );",
+			"return new IL<TRes, TStack>( stack.Pop().Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "localloc", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILPtr, TStack>", "TStack", "IL<Int32, TStack>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_localloc();",
+			"return new IL<ILPtr, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "arglist", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILPtr, TStack>", "TStack", "TStack", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_arglist();",
+			"return new IL<ILPtr, TStack>( stack );"
+		}),
+	}},
+	{ "mkrefany", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILTypedReference<TValue>, TStack>", "TValue, TStack", "IL<ILRef<TValue>, TStack>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_mkrefany();",
+			"return new IL<ILTypedReference<TValue>, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "refanytype", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<RuntimeTypeHandle, TStack>", "TValue, TStack", "IL<ILTypedReference<TValue>, TStack>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_mkrefany();",
+			"return new IL<RuntimeTypeHandle, TStack>( stack.Pop() );"
+		}),
+	}},
+	{ "refanyval", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "IL<ILTypedPtr<TValue>, TStack>", "TValue, TStack", "IL<ILTypedReference<TValue>, TStack>", null, new[] { "TStack : ILStack" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_mkrefany();",
+			"return new IL<ILTypedPtr<TValue>, TStack>( stack.Pop() );"
+		}),
+	}},
+
+
+
+
+
+	{ "cpblk", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TPtr1, TPtr2, TStack", "IL<TPtr2, IL<UInt32, IL<TPtr1, TStack>>>", null, new[] { "TStack : ILStack", "TPtr1 : ILPointer", "TPtr2 : ILPointer" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_cpblk();",
+			"return stack.Pop().Pop().Pop();"
+		}),
+	}},
+	{ "cpobj", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TValue, TStack", "IL<ILTypedPtr<TValue>, IL<ILTypedPtr<TValue>, TStack>>", null, new[] { "TStack : ILStack", "TValue : struct" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_cpobj(typeof(TValue));",
+			"return stack.Pop().Pop();"
+		}),
+	}},
+	{ "initblk", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TPtr, TStack", "IL<UInt32, IL<Byte, IL<TPtr, TStack>>>", null, new[] { "TStack : ILStack", "TPtr : ILPointer" }, new[] 
+		{
+			"stack.bottom.reciever.Emit_initblk();",
+			"return stack.Pop().Pop().Pop();"
+		}),
+	}},
+	{ "initobj", new (String ret, String genArgs, String arg1, (String type, String name)[] args, String[] constraints, String[] impl )[]
+	{
+		( "TStack", "TValue, TStack", "IL<ILTypedPtr<TValue>, TStack>", null, new[] { "TStack : ILStack", "TValue : struct" }, new[] 
+		{
+			"//stack.bottom.reciever.Emit_initobj();",
+			"return stack.Pop();"
 		}),
 	}},
 };
@@ -445,9 +909,9 @@ void SwitchFlowControl( ref String ret, ref String genArgs, ref String arg1, ref
 			//Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
 		break;
 
-		case FlowControl.Phi:
-			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
-		break;
+		//case FlowControl.Phi:
+		//	Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
+		//break;
 
 		case FlowControl.Return:
 			Write( $"\t\t//{opcode.Name} {opcode.FlowControl}\r\n");
@@ -680,10 +1144,6 @@ String[] GenerateImpl( OpCode opcode, (String ret, String genArgs, String arg1, 
 {
 	List<String> impl = new List<String>();
 	
-	String Projection( String input )
-	{
-		return input.Substring( input.Trim().LastIndexOf(' ') );
-	}
 	var callArgs = String.Join( ", ", sig.args.Select( (s) => s.name ).ToArray() );
 
 	impl.Add( $"stack.bottom.reciever.Emit_{opcode.Name.Replace('.','_')}({callArgs});" );
@@ -711,6 +1171,9 @@ void WriteExtensionMethod( String name, OpCode opcode )
 		if( !implOverrides.TryGetValue( opcode.Name, out impl ) ) impl = GenerateImpl( opcode, sig );
 
 		overloads = new[] {( sig.ret, sig.genArgs, sig.arg1, sig.args, sig.constraints, impl) };
+
+		Write( $"\t\t#warning {name} not implemented\r\n\r\n\r\n" );
+		return;
 	}
 
 	foreach( var (ret, genArgs, arg1, args, constraints, impl) in overloads )
@@ -727,6 +1190,7 @@ void WriteExtensionMethod( String name, OpCode opcode )
 	Write( "\r\n");
 }
 #>
+#pragma warning disable IDE0022 // Use expression body for methods
 namespace EmitHelper.IL
 {
 	using System;
@@ -798,3 +1262,4 @@ foreach( var oc in allOpcodes )
 #>
 	}
 }
+#pragma warning restore IDE0022 // Use expression body for methods

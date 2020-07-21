@@ -1,4 +1,5 @@
-﻿namespace EmitHelper.IL
+﻿#pragma warning disable IDE0022 // Use expression body for methods
+namespace EmitHelper.IL
 {
 	using System;
 
@@ -271,72 +272,42 @@ namespace EmitHelper.IL.ShortExtensions
 		}
 
 
-		public static IL<Int32, TStack> Arglist<TStack>( this TStack stack)
+		public static IL<ILPtr, TStack> Arglist<TStack>( this TStack stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_arglist();
-			return default;
+			return new IL<ILPtr, TStack>( stack );
 		}
 
 
 		//beq Cond_Branch
 		//beq Pop1_pop1
-		public static TStack Beq<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_beq(target);
-			return default;
-		}
+		#warning Beq not implemented
 
 
 		//bge Cond_Branch
 		//bge Pop1_pop1
-		public static TStack Bge<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_bge(target);
-			return default;
-		}
+		#warning Bge not implemented
 
 
 		//bgt Cond_Branch
 		//bgt Pop1_pop1
-		public static TStack Bgt<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_bgt(target);
-			return default;
-		}
+		#warning Bgt not implemented
 
 
 		//ble Cond_Branch
 		//ble Pop1_pop1
-		public static TStack Ble<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ble(target);
-			return default;
-		}
+		#warning Ble not implemented
 
 
 		//blt Cond_Branch
 		//blt Pop1_pop1
-		public static TStack Blt<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_blt(target);
-			return default;
-		}
+		#warning Blt not implemented
 
 
 		//bne.un Cond_Branch
 		//bne.un Pop1_pop1
-		public static TStack Bne<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_bne_un(target);
-			return default;
-		}
+		#warning Bne not implemented
 
 
 		public static IL<ILBoxed<TBoxed>, TStack> Box<TBoxed, TStack>( this IL<TBoxed, TStack> stack)
@@ -353,105 +324,60 @@ namespace EmitHelper.IL.ShortExtensions
 			where TBoxedFrom : struct
 			where TTypeRef : ITypeRef<TBoxedTo>
 		{
-			stack.bottom.reciever.Emit_box(type);
+			stack.bottom.reciever.Emit_box(type.type);
 			return new IL<ILBoxed<TBoxedTo>, TStack>( stack.Pop() );
 		}
 
 
 		//br Branch
-		public static TStack Br<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_br(target);
-			return default;
-		}
+		#warning Br not implemented
 
 
 		//break Break
-		public static TStack Break<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_break();
-			return default;
-		}
+		#warning Break not implemented
 
 
 		//brfalse Cond_Branch
-		public static TStack Brfalse<TStack>( this IL<Int32, TStack> stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_brfalse(target);
-			return default;
-		}
+		#warning Brfalse not implemented
 
 
 		//brtrue Cond_Branch
-		public static TStack Brtrue<TStack>( this IL<Int32, TStack> stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_brtrue(target);
-			return default;
-		}
+		#warning Brtrue not implemented
 
 
 		//call Call
 		//call Varpop
 		//call Varpush
-		public static TStack Call<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_call(method);
-			return default;
-		}
+		#warning Call not implemented
 
 
 		//calli Call
 		//calli Varpop
 		//calli Varpush
-		public static TStack Calli<TStack>( this TStack stack, ICallingConventions conventions, IType returnType, IType[] arguments)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_calli(conventions, returnType, arguments);
-			return default;
-		}
+		#warning Calli not implemented
 
 
 		//callvirt Call
 		//callvirt Varpop
 		//callvirt Varpush
-		public static TStack Callvirt<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_callvirt(method);
-			return default;
-		}
+		#warning Callvirt not implemented
 
 
 		public static IL<TCastTo, TStack> Castclass<TCastTo, TCastFrom, TTypeRef, TStack>( this IL<TCastFrom, TStack> stack, TTypeRef type)
 			where TStack : ILStack
-			where TBoxed : struct
 			where TTypeRef : ITypeRef<TCastTo>
 		{
-			stack.bottom.reciever.Emit_castclass(type);
+			stack.bottom.reciever.Emit_castclass(type.type);
 			return new IL<TCastTo, TStack>( stack.Pop() );
 		}
 
 
-		//ceq Pop1_pop1
-		public static IL<Int32, TStack> Ceq<TStack>( this TStack stack)
+		public static IL<TRes, TStack> Cmp<TCompare, T1, T2, TRes, TStack>( this IL<T2, IL<T1, TStack>> stack, TCompare comparison)
 			where TStack : ILStack
+			where TCompare : ILCompare.ICompare<T2,T1,TRes>
 		{
-			stack.bottom.reciever.Emit_ceq();
-			return default;
-		}
-
-
-		//cgt Pop1_pop1
-		public static IL<Int32, TStack> Cgt<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_cgt();
-			return default;
+			comparison.Emit( stack.bottom.reciever );
+			return new IL<TRes, TStack>( stack.Pop().Pop() );
 		}
 
 
@@ -470,369 +396,38 @@ namespace EmitHelper.IL.ShortExtensions
 		}
 
 
-		//clt Pop1_pop1
-		public static IL<Int32, TStack> Clt<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_clt();
-			return default;
-		}
-
-
 		//constrained. Meta
-		public static TStack Constrained<TStack>( this TStack stack, IType type)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_constrained_(type);
-			return default;
-		}
+		#warning Constrained not implemented
 
 
 		//conv.i No aliased name
-		//conv.i Pop1
-		public static IL<Int32, TStack> @conv_i<TStack>( this TStack stack)
+		public static IL<TTo, TStack> @conv_i<TConv, TFrom, TTo, TStack>( this IL<TFrom, TStack> stack, TConv conversion)
 			where TStack : ILStack
+			where TConv : ILConvert.IConvert<TFrom,TTo>
 		{
-			stack.bottom.reciever.Emit_conv_i();
-			return default;
-		}
-
-
-		//conv.i1 No aliased name
-		//conv.i1 Pop1
-		public static IL<Int32, TStack> @conv_i1<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_i1();
-			return default;
-		}
-
-
-		//conv.i2 No aliased name
-		//conv.i2 Pop1
-		public static IL<Int32, TStack> @conv_i2<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_i2();
-			return default;
-		}
-
-
-		//conv.i4 No aliased name
-		//conv.i4 Pop1
-		public static IL<Int32, TStack> @conv_i4<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_i4();
-			return default;
-		}
-
-
-		//conv.i8 No aliased name
-		//conv.i8 Pop1
-		public static IL<Int64, TStack> @conv_i8<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_i8();
-			return default;
-		}
-
-
-		//conv.ovf.i No aliased name
-		//conv.ovf.i Pop1
-		public static IL<Int32, TStack> @conv_ovf_i<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i();
-			return default;
-		}
-
-
-		//conv.ovf.i.un No aliased name
-		//conv.ovf.i.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_i_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i_un();
-			return default;
-		}
-
-
-		//conv.ovf.i1 No aliased name
-		//conv.ovf.i1 Pop1
-		public static IL<Int32, TStack> @conv_ovf_i1<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i1();
-			return default;
-		}
-
-
-		//conv.ovf.i1.un No aliased name
-		//conv.ovf.i1.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_i1_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i1_un();
-			return default;
-		}
-
-
-		//conv.ovf.i2 No aliased name
-		//conv.ovf.i2 Pop1
-		public static IL<Int32, TStack> @conv_ovf_i2<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i2();
-			return default;
-		}
-
-
-		//conv.ovf.i2.un No aliased name
-		//conv.ovf.i2.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_i2_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i2_un();
-			return default;
-		}
-
-
-		//conv.ovf.i4 No aliased name
-		//conv.ovf.i4 Pop1
-		public static IL<Int32, TStack> @conv_ovf_i4<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i4();
-			return default;
-		}
-
-
-		//conv.ovf.i4.un No aliased name
-		//conv.ovf.i4.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_i4_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i4_un();
-			return default;
-		}
-
-
-		//conv.ovf.i8 No aliased name
-		//conv.ovf.i8 Pop1
-		public static IL<Int64, TStack> @conv_ovf_i8<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i8();
-			return default;
-		}
-
-
-		//conv.ovf.i8.un No aliased name
-		//conv.ovf.i8.un Pop1
-		public static IL<Int64, TStack> @conv_ovf_i8_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_i8_un();
-			return default;
-		}
-
-
-		//conv.ovf.u No aliased name
-		//conv.ovf.u Pop1
-		public static IL<Int32, TStack> @conv_ovf_u<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u();
-			return default;
-		}
-
-
-		//conv.ovf.u.un No aliased name
-		//conv.ovf.u.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_u_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u_un();
-			return default;
-		}
-
-
-		//conv.ovf.u1 No aliased name
-		//conv.ovf.u1 Pop1
-		public static IL<Int32, TStack> @conv_ovf_u1<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u1();
-			return default;
-		}
-
-
-		//conv.ovf.u1.un No aliased name
-		//conv.ovf.u1.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_u1_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u1_un();
-			return default;
-		}
-
-
-		//conv.ovf.u2 No aliased name
-		//conv.ovf.u2 Pop1
-		public static IL<Int32, TStack> @conv_ovf_u2<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u2();
-			return default;
-		}
-
-
-		//conv.ovf.u2.un No aliased name
-		//conv.ovf.u2.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_u2_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u2_un();
-			return default;
-		}
-
-
-		//conv.ovf.u4 No aliased name
-		//conv.ovf.u4 Pop1
-		public static IL<Int32, TStack> @conv_ovf_u4<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u4();
-			return default;
-		}
-
-
-		//conv.ovf.u4.un No aliased name
-		//conv.ovf.u4.un Pop1
-		public static IL<Int32, TStack> @conv_ovf_u4_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u4_un();
-			return default;
-		}
-
-
-		//conv.ovf.u8 No aliased name
-		//conv.ovf.u8 Pop1
-		public static IL<Int64, TStack> @conv_ovf_u8<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u8();
-			return default;
-		}
-
-
-		//conv.ovf.u8.un No aliased name
-		//conv.ovf.u8.un Pop1
-		public static IL<Int64, TStack> @conv_ovf_u8_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_ovf_u8_un();
-			return default;
-		}
-
-
-		//conv.r.un No aliased name
-		//conv.r.un Pop1
-		public static IL<Double, TStack> @conv_r_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_r_un();
-			return default;
-		}
-
-
-		//conv.r4 No aliased name
-		//conv.r4 Pop1
-		public static IL<Single, TStack> @conv_r4<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_r4();
-			return default;
-		}
-
-
-		//conv.r8 No aliased name
-		//conv.r8 Pop1
-		public static IL<Double, TStack> @conv_r8<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_r8();
-			return default;
-		}
-
-
-		//conv.u No aliased name
-		//conv.u Pop1
-		public static IL<Int32, TStack> @conv_u<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_u();
-			return default;
-		}
-
-
-		//conv.u1 No aliased name
-		//conv.u1 Pop1
-		public static IL<Int32, TStack> @conv_u1<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_u1();
-			return default;
-		}
-
-
-		//conv.u2 No aliased name
-		//conv.u2 Pop1
-		public static IL<Int32, TStack> @conv_u2<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_u2();
-			return default;
-		}
-
-
-		//conv.u4 No aliased name
-		//conv.u4 Pop1
-		public static IL<Int32, TStack> @conv_u4<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_u4();
-			return default;
-		}
-
-
-		//conv.u8 No aliased name
-		//conv.u8 Pop1
-		public static IL<Int64, TStack> @conv_u8<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_conv_u8();
-			return default;
+			conversion.Emit( stack.bottom.reciever );
+			return new IL<TTo, TStack>( stack.Pop() );
 		}
 
 
 		//cpblk No aliased name
-		public static TStack @cpblk<TStack>( this TStack stack)
+		public static TStack @cpblk<TPtr1, TPtr2, TStack>( this IL<TPtr2, IL<UInt32, IL<TPtr1, TStack>>> stack)
 			where TStack : ILStack
+			where TPtr1 : ILPointer
+			where TPtr2 : ILPointer
 		{
 			stack.bottom.reciever.Emit_cpblk();
-			return default;
+			return stack.Pop().Pop().Pop();
 		}
 
 
 		//cpobj No aliased name
-		public static TStack @cpobj<TStack>( this IL<Int32, IL<Int32, TStack>> stack, IType type)
+		public static TStack @cpobj<TValue, TStack>( this IL<ILTypedPtr<TValue>, IL<ILTypedPtr<TValue>, TStack>> stack)
 			where TStack : ILStack
+			where TValue : struct
 		{
-			stack.bottom.reciever.Emit_cpobj(type);
-			return default;
+			//stack.bottom.reciever.Emit_cpobj(typeof(TValue));
+			return stack.Pop().Pop();
 		}
 
 
@@ -845,90 +440,74 @@ namespace EmitHelper.IL.ShortExtensions
 
 
 		//dup No aliased name
-		//dup Pop1
-		//dup Push1_push1
-		public static TStack @dup<TStack>( this TStack stack)
+		public static IL<TDuped, IL<TDuped, TStack>> @dup<TDuped, TStack>( this IL<TDuped, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_dup();
-			return default;
+			return new IL<TDuped, IL<TDuped, TStack>>( stack );
 		}
 
 
 		//endfilter No aliased name
 		//endfilter Return
-		public static TStack @endfilter<TStack>( this IL<Int32, TStack> stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_endfilter();
-			return default;
-		}
+		#warning @endfilter not implemented
 
 
 		//endfinally No aliased name
 		//endfinally Return
-		public static TStack @endfinally<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_endfinally();
-			return default;
-		}
+		#warning @endfinally not implemented
 
 
 		//initblk No aliased name
-		public static TStack @initblk<TStack>( this TStack stack)
+		public static TStack @initblk<TPtr, TStack>( this IL<UInt32, IL<Byte, IL<TPtr, TStack>>> stack)
 			where TStack : ILStack
+			where TPtr : ILPointer
 		{
 			stack.bottom.reciever.Emit_initblk();
-			return default;
+			return stack.Pop().Pop().Pop();
 		}
 
 
 		//initobj No aliased name
-		public static TStack @initobj<TStack>( this IL<Int32, TStack> stack, IType type)
+		public static TStack @initobj<TValue, TStack>( this IL<ILTypedPtr<TValue>, TStack> stack)
 			where TStack : ILStack
+			where TValue : struct
 		{
-			stack.bottom.reciever.Emit_initobj(type);
-			return default;
+			//stack.bottom.reciever.Emit_initobj();
+			return stack.Pop();
 		}
 
 
 		//isinst No aliased name
-		//isinst Popref
-		public static IL<Int32, TStack> @isinst<TStack>( this TStack stack, IType type)
+		public static IL<TCastTo, TStack> @isinst<TCastTo, TCastFrom, TTypeRef, TStack>( this IL<TCastFrom, TStack> stack, TTypeRef type)
 			where TStack : ILStack
+			where TTypeRef : ITypeRef<TCastTo>
 		{
-			stack.bottom.reciever.Emit_isinst(type);
-			return default;
+			stack.bottom.reciever.Emit_isinst(type.type);
+			return new IL<TCastTo, TStack>( stack.Pop() );
 		}
 
 
 		//jmp No aliased name
 		//jmp Call
-		public static TStack @jmp<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_jmp(method);
-			return default;
-		}
+		#warning @jmp not implemented
 
 
 		//ldarg No aliased name
-		//ldarg Push1
-		public static TStack @ldarg<TStack>( this TStack stack, Int16 value)
+		public static IL<TArg, TStack> @ldarg<TArg, TStack>( this TStack stack, ILArgument<TArg> argument)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldarg(value);
-			return default;
+			stack.bottom.reciever.Emit_ldarg(argument.index);
+			return new IL<TArg, TStack>( stack );
 		}
 
 
 		//ldarga No aliased name
-		public static IL<Int32, TStack> @ldarga<TStack>( this TStack stack, Int16 value)
+		public static IL<ILRef<TArg>, TStack> @ldarga<TArg, TStack>( this TStack stack, ILArgument<TArg> argument)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldarga(value);
-			return default;
+			stack.bottom.reciever.Emit_ldarga(argument.index);
+			return new IL<ILRef<TArg>, TStack>( stack );
 		}
 
 
@@ -937,261 +516,190 @@ namespace EmitHelper.IL.ShortExtensions
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_ldc_i4(value);
-			return default;
-		}
-
-
-		//ldc.i4.s No aliased name
-		public static IL<Int32, TStack> @ldc_i4_s<TStack>( this TStack stack, Byte value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldc_i4_s(value);
-			return default;
-		}
-
-
-		//ldc.i8 No aliased name
-		public static IL<Int64, TStack> @ldc_i8<TStack>( this TStack stack, Int64 value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldc_i8(value);
-			return default;
-		}
-
-
-		//ldc.r4 No aliased name
-		public static IL<Single, TStack> @ldc_r4<TStack>( this TStack stack, Single value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldc_r4(value);
-			return default;
-		}
-
-
-		//ldc.r8 No aliased name
-		public static IL<Double, TStack> @ldc_r8<TStack>( this TStack stack, Double value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldc_r8(value);
-			return default;
+			return new IL<Int32, TStack>( stack );
 		}
 
 
 		//ldelem No aliased name
-		//ldelem Popref_popi
-		//ldelem Push1
-		public static TStack @ldelem<TStack>( this TStack stack, IType type)
+		public static IL<TElem, TStack> @ldelem<TElem, TStack>( this IL<ILIndex ,IL<ILArray<TElem>, TStack>> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldelem(type);
-			return default;
+			//stack.bottom.reciever.Emit_ldsfld(field.field);
+			return new IL<TElem, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//ldelema No aliased name
-		//ldelema Popref_popi
-		public static IL<Int32, TStack> @ldelema<TStack>( this TStack stack, IType type)
+		public static IL<ILRef<TElem>, TStack> @ldelema<TElem, TStack>( this IL<ILIndex, IL<ILArray<TElem>, TStack>> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldelema(type);
-			return default;
+			//stack.bottom.reciever.Emit_ldsflda(field.field);
+			return new IL<ILRef<TElem>, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//ldfld No aliased name
-		//ldfld Popref
-		//ldfld Push1
-		public static TStack @ldfld<TStack>( this TStack stack, IField field)
+		public static IL<TValue, TStack> @ldfld<TOn, TValue, TStack>( this IL<TOn, TStack> stack, ILField<TOn,TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldfld(field);
-			return default;
+			stack.bottom.reciever.Emit_ldsfld(field.field);
+			return new IL<TValue, TStack>( stack.Pop() );
 		}
 
 
 		//ldflda No aliased name
-		//ldflda Popref
-		public static IL<Int32, TStack> @ldflda<TStack>( this TStack stack, IField field)
+		public static IL<ILRef<TValue>, TStack> @ldflda<TOn, TValue, TStack>( this IL<TOn, TStack> stack, ILField<TOn,TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldflda(field);
-			return default;
+			stack.bottom.reciever.Emit_ldsflda(field.field);
+			return new IL<ILRef<TValue>, TStack>( stack.Pop() );
 		}
 
 
 		//ldftn No aliased name
-		public static IL<Int32, TStack> @ldftn<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldftn(method);
-			return default;
-		}
-
-
-		//ldind.i No aliased name
-		public static IL<Int32, TStack> @ldind_i<TStack>( this IL<Int32, TStack> stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldind_i();
-			return default;
-		}
+		#warning @ldftn not implemented
 
 
 		//ldlen No aliased name
-		//ldlen Popref
-		public static IL<Int32, TStack> @ldlen<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @ldlen<TElem, TStack>( this IL<ILArray<TElem>, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_ldlen();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop() );
 		}
 
 
 		//ldloc No aliased name
-		//ldloc Push1
-		public static TStack @ldloc<TStack>( this TStack stack, Int16 value)
+		public static IL<TLoc, TStack> @ldloc<TLoc, TStack>( this TStack stack, ILLocal<TLoc> local)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldloc(value);
-			return default;
+			stack.bottom.reciever.Emit_ldloc(local.index);
+			return new IL<TLoc, TStack>( stack );
 		}
 
 
 		//ldloca No aliased name
-		public static IL<Int32, TStack> @ldloca<TStack>( this TStack stack, Int16 value)
+		public static IL<ILRef<TLoc>, TStack> @ldloca<TLoc, TStack>( this TStack stack, ILLocal<TLoc> local)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldloca(value);
-			return default;
+			stack.bottom.reciever.Emit_ldloca(local.index);
+			return new IL<ILRef<TLoc>, TStack>( stack );
 		}
 
 
 		//ldnull No aliased name
-		//ldnull Pushref
-		public static TStack @ldnull<TStack>( this TStack stack)
+		public static IL<ILNull, TStack> @ldnull<TStack>( this TStack stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_ldnull();
-			return default;
+			return new IL<ILNull, TStack>( stack );
 		}
 
 
 		//ldobj No aliased name
-		//ldobj Push1
-		public static TStack @ldobj<TStack>( this IL<Int32, TStack> stack, IType type)
+		public static IL<TValue, TStack> @ldobj<TValue, TStack>( this IL<ILRef<TValue>, TStack> stack)
 			where TStack : ILStack
+			where TValue : struct
 		{
-			stack.bottom.reciever.Emit_ldobj(type);
-			return default;
+			//stack.bottom.reciever.Emit_ldsfld(field.field);
+			return new IL<TValue, TStack>( stack.Pop() );
 		}
 
 
 		//ldsfld No aliased name
-		//ldsfld Push1
-		public static TStack @ldsfld<TStack>( this TStack stack, IField field)
+		public static IL<TValue, TStack> @ldsfld<TValue, TStack>( this TStack stack, ILSField<TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldsfld(field);
-			return default;
+			stack.bottom.reciever.Emit_ldsfld(field.field);
+			return new IL<TValue, TStack>( stack );
 		}
 
 
 		//ldsflda No aliased name
-		public static IL<Int32, TStack> @ldsflda<TStack>( this TStack stack, IField field)
+		public static IL<ILRef<TValue>, TStack> @ldsflda<TValue, TStack>( this TStack stack, ILSField<TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldsflda(field);
-			return default;
-		}
-
-
-		//ldstr No aliased name
-		//ldstr Pushref
-		public static TStack @ldstr<TStack>( this TStack stack, String value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldstr(value);
-			return default;
+			stack.bottom.reciever.Emit_ldsflda(field.field);
+			return new IL<ILRef<TValue>, TStack>( stack );
 		}
 
 
 		//ldtoken No aliased name
-		public static IL<Int32, TStack> @ldtoken<TStack>( this TStack stack, IType typeToken)
+		public static IL<RuntimeFieldHandle, TStack> @ldtoken<TStack>( this TStack stack, IField field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_ldtoken(typeToken);
-			return default;
+			stack.bottom.reciever.Emit_ldtoken(field);
+			return new IL<RuntimeFieldHandle, TStack>( stack );
+		}
+
+		public static IL<RuntimeMethodHandle, TStack> @ldtoken<TStack>( this TStack stack, IMethod method)
+			where TStack : ILStack
+		{
+			stack.bottom.reciever.Emit_ldtoken(method);
+			return new IL<RuntimeMethodHandle, TStack>( stack );
+		}
+
+		public static IL<RuntimeTypeHandle, TStack> @ldtoken<TStack>( this TStack stack, IType type)
+			where TStack : ILStack
+		{
+			stack.bottom.reciever.Emit_ldtoken(type);
+			return new IL<RuntimeTypeHandle, TStack>( stack );
 		}
 
 
 		//ldvirtftn No aliased name
 		//ldvirtftn Popref
-		public static IL<Int32, TStack> @ldvirtftn<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ldvirtftn(method);
-			return default;
-		}
+		#warning @ldvirtftn not implemented
 
 
 		//leave No aliased name
 		//leave Branch
-		public static TStack @leave<TStack>( this TStack stack, ILabel target)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_leave(target);
-			return default;
-		}
+		#warning @leave not implemented
 
 
 		//localloc No aliased name
-		public static IL<Int32, TStack> @localloc<TStack>( this IL<Int32, TStack> stack)
+		public static IL<ILPtr, TStack> @localloc<TStack>( this IL<Int32, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_localloc();
-			return default;
+			return new IL<ILPtr, TStack>( stack.Pop() );
 		}
 
 
 		//mkrefany No aliased name
-		//mkrefany Push1
-		public static TStack @mkrefany<TStack>( this IL<Int32, TStack> stack, IType type)
+		public static IL<ILTypedReference<TValue>, TStack> @mkrefany<TValue, TStack>( this IL<ILRef<TValue>, TStack> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_mkrefany(type);
-			return default;
+			//stack.bottom.reciever.Emit_mkrefany();
+			return new IL<ILTypedReference<TValue>, TStack>( stack.Pop() );
 		}
 
 
 		//mul No aliased name
-		//mul Pop1_pop1
-		//mul Push1
-		public static TStack @mul<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @mul<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_mul();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//neg No aliased name
-		//neg Pop1
-		//neg Push1
-		public static TStack @neg<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @neg<TStack>( this IL<Int32, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_neg();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop() );
 		}
 
 
 		//newarr No aliased name
-		//newarr Pushref
-		public static TStack @newarr<TStack>( this IL<Int32, TStack> stack, IType type)
+		public static IL<ILArray<TElem>, TStack> @newarr<TElem, TType, TStack>( this IL<ILLength, TStack> stack, TType elementType)
 			where TStack : ILStack
+			where TType : ITypeRef<TElem>
 		{
-			stack.bottom.reciever.Emit_newarr(type);
-			return default;
+			stack.bottom.reciever.Emit_newarr(elementType.type);
+			return new IL<ILArray<TElem>, TStack>( stack.Pop() );
 		}
 
 
@@ -1199,308 +707,223 @@ namespace EmitHelper.IL.ShortExtensions
 		//newobj Call
 		//newobj Varpop
 		//newobj Pushref
-		public static TStack @newobj<TStack>( this TStack stack, IMethod method)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_newobj(method);
-			return default;
-		}
+		#warning @newobj not implemented
 
 
 		public static TStack Nop<TStack>( this TStack stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_nop();
-			return default;
+			return stack;
 		}
 
 
 		//not No aliased name
-		//not Pop1
-		//not Push1
-		public static TStack @not<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @not<TStack>( this IL<Int32, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_not();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop() );
 		}
 
 
 		//or No aliased name
-		//or Pop1_pop1
-		//or Push1
-		public static TStack @or<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @or<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_or();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//pop No aliased name
-		//pop Pop1
-		public static TStack @pop<TStack>( this TStack stack)
+		public static TStack @pop<TPopped, TStack>( this IL<TPopped, TStack> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_pop();
-			return default;
+			return stack.Pop();
 		}
 
 
 		//readonly. No aliased name
 		//readonly. Meta
-		public static TStack @readonly_<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_readonly_();
-			return default;
-		}
+		#warning @readonly_ not implemented
 
 
 		//refanytype No aliased name
-		//refanytype Pop1
-		public static IL<Int32, TStack> @refanytype<TStack>( this TStack stack)
+		public static IL<RuntimeTypeHandle, TStack> @refanytype<TValue, TStack>( this IL<ILTypedReference<TValue>, TStack> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_refanytype();
-			return default;
+			//stack.bottom.reciever.Emit_mkrefany();
+			return new IL<RuntimeTypeHandle, TStack>( stack.Pop() );
 		}
 
 
 		//refanyval No aliased name
-		//refanyval Pop1
-		public static IL<Int32, TStack> @refanyval<TStack>( this TStack stack, IType type)
+		public static IL<ILTypedPtr<TValue>, TStack> @refanyval<TValue, TStack>( this IL<ILTypedReference<TValue>, TStack> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_refanyval(type);
-			return default;
+			//stack.bottom.reciever.Emit_mkrefany();
+			return new IL<ILTypedPtr<TValue>, TStack>( stack.Pop() );
 		}
 
 
 		//rem No aliased name
-		//rem Pop1_pop1
-		//rem Push1
-		public static TStack @rem<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @rem<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_rem();
-			return default;
-		}
-
-
-		//rem.un No aliased name
-		//rem.un Pop1_pop1
-		//rem.un Push1
-		public static TStack @rem_un<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_rem_un();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//ret No aliased name
 		//ret Return
 		//ret Varpop
-		public static TStack @ret<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_ret();
-			return default;
-		}
+		#warning @ret not implemented
 
 
 		//rethrow No aliased name
 		//rethrow Throw
-		public static TStack @rethrow<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_rethrow();
-			return default;
-		}
+		#warning @rethrow not implemented
 
 
 		//shl No aliased name
-		//shl Pop1_pop1
-		//shl Push1
-		public static TStack @shl<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @shl<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_shl();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//shr No aliased name
-		//shr Pop1_pop1
-		//shr Push1
-		public static TStack @shr<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @shr<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_shr();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//sizeof No aliased name
-		public static IL<Int32, TStack> @sizeof<TStack>( this TStack stack, IType type)
+		public static IL<UInt32, TStack> @sizeof<TType, TStack>( this TStack stack, TType type)
 			where TStack : ILStack
+			where TType : IType
 		{
 			stack.bottom.reciever.Emit_sizeof(type);
-			return default;
+			return new IL<UInt32, TStack>( stack );
 		}
 
 
 		//starg No aliased name
-		//starg Pop1
-		public static TStack @starg<TStack>( this TStack stack, Int16 value)
+		public static TStack @starg<TArg, TStack>( this IL<TArg, TStack> stack, ILArgument<TArg> argument)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_starg(value);
-			return default;
+			stack.bottom.reciever.Emit_starg(argument.index);
+			return stack.Pop();
 		}
 
 
 		//stelem No aliased name
-		//stelem Popref_popi_pop1
-		public static TStack @stelem<TStack>( this TStack stack, IType type)
+		public static TStack @stelem<TElem, TStack>( this IL<TElem,IL<ILIndex, IL<ILArray<TElem>, TStack>>> stack)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_stelem(type);
-			return default;
+			//stack.bottom.reciever.Emit_stsfld(field.field);
+			return stack.Pop().Pop().Pop();
 		}
 
 
 		//stfld No aliased name
-		//stfld Popref_pop1
-		public static TStack @stfld<TStack>( this TStack stack, IField field)
+		public static TStack @stfld<TOn, TValue, TStack>( this IL<TValue, IL<TOn, TStack>> stack, ILField<TOn,TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_stfld(field);
-			return default;
-		}
-
-
-		//stind.i No aliased name
-		public static TStack @stind_i<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_stind_i();
-			return default;
+			stack.bottom.reciever.Emit_stsfld(field.field);
+			return stack.Pop().Pop();
 		}
 
 
 		//stloc No aliased name
-		//stloc Pop1
-		public static TStack @stloc<TStack>( this TStack stack, Int16 value)
+		public static TStack @stloc<TLoc, TStack>( this IL<TLoc, TStack> stack, ILLocal<TLoc> local)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_stloc(value);
-			return default;
+			stack.bottom.reciever.Emit_stloc(local.index);
+			return stack.Pop();
 		}
 
 
 		//stobj No aliased name
-		//stobj Popi_pop1
-		public static TStack @stobj<TStack>( this TStack stack, IType type)
+		public static TStack @stobj<TValue, TStack>( this IL<TValue, IL<ILRef<TValue>, TStack>> stack)
 			where TStack : ILStack
+			where TValue : struct
 		{
-			stack.bottom.reciever.Emit_stobj(type);
-			return default;
+			//stack.bottom.reciever.Emit_stsfld(field.field);
+			return stack.Pop().Pop();
 		}
 
 
 		//stsfld No aliased name
-		//stsfld Pop1
-		public static TStack @stsfld<TStack>( this TStack stack, IField field)
+		public static TStack @stsfld<TValue, TStack>( this IL<TValue, TStack> stack, ILSField<TValue> field)
 			where TStack : ILStack
 		{
-			stack.bottom.reciever.Emit_stsfld(field);
-			return default;
+			stack.bottom.reciever.Emit_stsfld(field.field);
+			return stack.Pop();
 		}
 
 
 		//sub No aliased name
-		//sub Pop1_pop1
-		//sub Push1
-		public static TStack @sub<TStack>( this TStack stack)
+		public static IL<Int32, TStack> @sub<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
 			where TStack : ILStack
 		{
 			stack.bottom.reciever.Emit_sub();
-			return default;
+			return new IL<Int32, TStack>( stack.Pop().Pop() );
 		}
 
 
 		//switch No aliased name
 		//switch Cond_Branch
-		public static TStack @switch<TStack>( this IL<Int32, TStack> stack, ILabel[] targets)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_switch(targets);
-			return default;
-		}
+		#warning @switch not implemented
 
 
 		//tail. No aliased name
 		//tail. Meta
-		public static TStack @tail_<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_tail_();
-			return default;
-		}
+		#warning @tail_ not implemented
 
 
 		//throw No aliased name
 		//throw Throw
 		//throw Popref
-		public static TStack @throw<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_throw();
-			return default;
-		}
+		#warning @throw not implemented
 
 
 		//unaligned. No aliased name
 		//unaligned. Meta
-		public static TStack @unaligned_<TStack>( this TStack stack, Byte value)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_unaligned_(value);
-			return default;
-		}
+		#warning @unaligned_ not implemented
 
 
 		//unbox No aliased name
-		//unbox Popref
-		public static IL<Int32, TStack> @unbox<TStack>( this TStack stack, IType type)
+		public static IL<ILRef<TBoxed>, TStack> @unbox<TBoxed, TStack>( this IL<ILBoxed<TBoxed>, TStack> stack)
 			where TStack : ILStack
+			where TBoxed : struct
 		{
-			stack.bottom.reciever.Emit_unbox(type);
-			return default;
+			//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff
+			return new IL<ILRef<TBoxed>, TStack>( stack.Pop() );
 		}
 
 
 		//unbox.any No aliased name
-		//unbox.any Popref
-		//unbox.any Push1
-		public static TStack @unbox_any<TStack>( this TStack stack, IType type)
+		public static IL<TBoxed, TStack> @unbox_any<TBoxed, TStack>( this IL<ILBoxed<TBoxed>, TStack> stack)
 			where TStack : ILStack
+			where TBoxed : struct
 		{
-			stack.bottom.reciever.Emit_unbox_any(type);
-			return default;
+			//stack.bottom.reciever.Emit_box(typeof(TBoxed));// TODO: Aliasing stuff
+			return new IL<TBoxed, TStack>( stack.Pop() );
 		}
 
 
 		//volatile. No aliased name
 		//volatile. Meta
-		public static TStack @volatile_<TStack>( this TStack stack)
-			where TStack : ILStack
-		{
-			stack.bottom.reciever.Emit_volatile_();
-			return default;
-		}
+		#warning @volatile_ not implemented
 
 
 		public static IL<Int32, TStack> Xor<TStack>( this IL<Int32, IL<Int32, TStack>> stack)
@@ -1522,3 +945,4 @@ namespace EmitHelper.IL.LongExtensions
 	{
 	}
 }
+#pragma warning restore IDE0022 // Use expression body for methods

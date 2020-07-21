@@ -17,8 +17,10 @@ namespace EmitHelper.IL
 	{ }
 	public partial interface IType : ITokenProvider
 	{ }
-	public partial interface ITypeRef<TAlias> : IType
-	{ }
+	public partial interface ITypeRef<TAlias>
+	{
+		IType type { get; }
+	}
 	public partial interface ICallingConventions
 	{ }
 	public partial interface ILEmitReciever { }
@@ -34,6 +36,30 @@ namespace EmitHelper.IL
     {
         public ILEmitReciever reciever { get => throw new NotImplementedException(); }
         public ILEmptyStack bottom { get => this; }
+    }
+
+	public struct ILField<TOn,TValue>
+    {
+		public readonly IField field;
+    }
+
+	public struct ILSField<TValue>
+    {
+		public readonly IField field;
+    }
+
+	public struct ILArray<TElem>
+    {
+
+    }
+
+	public struct ILIndex
+    {
+
+    }
+	public struct ILLength
+    {
+
     }
 
 
@@ -63,6 +89,59 @@ namespace EmitHelper.IL
 
     }
 
+	public struct ILRef<T>
+    {
 
+    }
 
+	public interface ILPointer { }
+	public struct ILPtr : ILPointer
+    {
+
+    }
+	public struct ILTypedPtr<T> : ILPointer
+    {
+
+    }
+
+	public struct ILTypedReference<T>
+    {
+
+    }
+	public struct ILLocal<T>
+    {
+		public readonly Int16 index;
+    }
+
+	public class ILNull { }
+
+	public readonly struct ILArgument<T>
+    {
+		public readonly Int16 index;
+    }
+
+	public static class ILConvert
+    {
+		public interface IConvert<TFrom, TTo>
+        {
+			void Emit(ILEmitReciever rec);
+        }
+
+    }
+
+	public static class ILCompare
+    {
+		public interface ICompare<T1, T2, TRes> 
+		{
+			void Emit(ILEmitReciever rec);
+		}
+    }
+
+	public static class ILBranch
+    {
+		public interface IBranch<T1,T2>
+        {
+			void Emit(ILEmitReciever rec);
+        }
+    }
 }
